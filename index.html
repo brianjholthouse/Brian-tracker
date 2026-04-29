@@ -557,6 +557,192 @@
   }
   .modal-btn-add:hover { opacity: .85; }
   #delegated-to-field { display: none; }
+
+  /* ── Platform Notes ─────────────────────────────────────────── */
+  .pn-shell {
+    display: flex;
+    gap: 0;
+    min-height: 600px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .pn-sidebar {
+    width: 160px;
+    flex-shrink: 0;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 12px 0;
+  }
+  .pn-sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.12s;
+    user-select: none;
+  }
+  .pn-sidebar-item:hover { background: var(--teal-light); color: var(--text); }
+  .pn-sidebar-item.active {
+    background: var(--teal-light);
+    color: var(--navy);
+    font-weight: 500;
+    border-left-color: var(--teal);
+  }
+  .pn-sidebar-count {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-faint);
+    background: var(--border);
+    border-radius: 100px;
+    padding: 1px 6px;
+    font-family: 'DM Mono', monospace;
+  }
+  .pn-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .pn-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .pn-platform-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+  }
+  .pn-search {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 5px 10px;
+    outline: none;
+    background: var(--bg);
+    color: var(--text);
+    width: 200px;
+    transition: border-color .15s;
+  }
+  .pn-search:focus { border-color: var(--teal); background: var(--surface); }
+  .pn-feed {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+  }
+  .pn-entry {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background: var(--surface);
+    transition: box-shadow 0.15s;
+  }
+  .pn-entry:hover { box-shadow: 0 2px 8px rgba(26,39,68,0.08); }
+  .pn-entry-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .pn-entry-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    outline: none;
+    flex: 1;
+    line-height: 1.4;
+  }
+  .pn-entry-title:empty::before { content: 'Note title'; color: var(--text-faint); }
+  .pn-entry-date {
+    font-size: 11px;
+    color: var(--text-faint);
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .pn-entry-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    outline: none;
+    min-height: 40px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .pn-entry-body:empty::before { content: 'Add notes here…'; color: var(--text-faint); }
+  .pn-entry-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .pn-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: var(--gray-bg);
+    color: var(--gray-text);
+    cursor: pointer;
+  }
+  .pn-del-btn {
+    font-size: 11px;
+    color: var(--text-faint);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+  }
+  .pn-entry:hover .pn-del-btn { opacity: 1; }
+  .pn-del-btn:hover { color: #ef4444; }
+  .pn-add-bar {
+    border-top: 1px solid var(--border);
+    padding: 14px 20px;
+    flex-shrink: 0;
+    background: var(--bg);
+  }
+  .pn-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-faint);
+    font-size: 13px;
+    font-style: italic;
+  }
+  .pn-pdf-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--red-bg);
+    color: var(--red-text);
+    margin-top: 6px;
+    cursor: default;
+  }
 </style>
 </head>
 <body>
@@ -565,9 +751,9 @@
   <div class="header">
     <div>
       <h1>Brian — Work Tracker</h1>
-      <div class="header-sub">BW Forsyth Partners · Work · <span id="today-label">April 23, 2026</span></div>
+      <div class="header-sub">BW Forsyth Partners · Work · <span id="today-label">April 29, 2026</span></div>
     </div>
-    <div class="save-status" id="save-status">Saved locally (no cloud)</div>
+    <div class="save-status" id="save-status">All changes saved</div>
   </div>
 
   <div class="nav">
@@ -576,6 +762,7 @@
     <button class="nav-btn" onclick="showSection('calendar',this)">Calendar</button>
     <button class="nav-btn" onclick="showSection('feedback',this)">Team Feedback</button>
     <button class="nav-btn" onclick="showSection('notes',this)">Notes</button>
+    <button class="nav-btn" onclick="showSection('platform-notes',this)">Platform Notes</button>
     <button class="nav-btn archive-tab" onclick="showSection('completed',this)">Completed</button>
     <button class="nav-btn archive-tab" onclick="showSection('ma-archive',this)">M&amp;A Repository</button>
   </div>
@@ -584,7 +771,7 @@
   <div id="rail" class="section active">
     <button class="add-row-btn" onclick="addRailRow()" style="margin-bottom:12px;">+ Add action item</button>
     <div id="rail-filter-bar" class="filter-bar"><button class="filter-btn active">All</button><button class="filter-btn">Not started</button><button class="filter-btn">In-Progress</button><button class="filter-btn">Quick Task</button><button class="filter-btn">On-Hold</button><button class="filter-btn">Delegated</button><button class="filter-btn">Parking Lot</button></div>
-    <div id="rail-groups"><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red-text); margin: 4px 0px 8px; padding-left: 2px; display: flex; align-items: center; gap: 6px;"><span>🚨 Past Due</span><span style="font-size:10px;font-weight:400;color:var(--text-faint);">2 items</span></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 10px; border-left: 3px solid var(--red-text); border-radius: 0 var(--radius-lg) var(--radius-lg) 0; background: var(--red-bg);"><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+    <div id="rail-groups"><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red-text); margin: 4px 0px 8px; padding-left: 2px; display: flex; align-items: center; gap: 6px;"><span>🚨 Past Due</span><span style="font-size:10px;font-weight:400;color:var(--text-faint);">3 items</span></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 10px; border-left: 3px solid var(--red-text); border-radius: 0 var(--radius-lg) var(--radius-lg) 0; background: var(--red-bg);"><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
         <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
         <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Platform</th>
         <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
@@ -599,83 +786,175 @@
             <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
           <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Finalize legal agreements</td>
         </tr><tr>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Joel Mid-Year Prep</td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-amber" style="cursor:default;font-size:10px;">Carr</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--red-text);font-weight:500;">4/20/26</td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Prep for Joel's mid-year review</td>
-        </tr></tbody></table></div><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin: 4px 0px 8px; padding-left: 2px; display: flex; align-items: center; gap: 6px;"><span>📅 Due This Week</span><span style="font-size:10px;font-weight:400;color:var(--text-faint);">5 items</span></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 10px; border-left: 3px solid var(--navy); border-radius: 0 var(--radius-lg) var(--radius-lg) 0;"><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
-        <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
-        <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Platform</th>
-        <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
-        <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
-        <th style="width:33%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Notes</th>
-      </tr></thead><tbody><tr>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Alpine Meeting Prep</td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/24/26</td>
-                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Develop agenda and content</td>
-        </tr><tr>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">BWFP Monthly Pulse Materials</td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-navy" style="cursor:default;font-size:10px;">BWFP</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/24/26</td>
-                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Develop monthly update materials</td>
-        </tr><tr>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">M&amp;A - N+1 Connection</td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-red" style="cursor:default;font-size:10px;">M&amp;A</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/24/26</td>
-                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Call confirmed for next week</td>
-        </tr><tr>
           <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Schedule Intec Visit</td>
           <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
             <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/24/26</td>
-                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--red-text);font-weight:500;">4/24/26</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
             <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
           <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Set up visit to Intec</td>
         </tr><tr>
           <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">BWFP Staffing Matrix</td>
           <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
             <span class="badge badge-navy" style="cursor:default;font-size:10px;">BWFP</span></td>
-          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/24/26</td>
-                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--red-text);font-weight:500;">4/24/26</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
             <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
           <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Coverage Matrix</td>
-        </tr></tbody></table></div><div style="border-top: 2px solid var(--border); margin: 18px 0px 14px; position: relative;"><span style="position:absolute;top:-9px;left:0;background:var(--bg);padding-right:10px;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);">By Platform</span></div><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin: 4px 0px 8px; padding-left: 2px; display: flex; align-items: center; gap: 6px;"><span>⚡ Quick Tasks</span><span style="font-size:10px;font-weight:400;color:var(--text-faint);">0 items — knock these out in free minutes</span></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 16px; border-left: 3px solid var(--teal); border-radius: 0 var(--radius-lg) var(--radius-lg) 0;"><div style="font-size: 12px; color: var(--text-faint); padding: 4px 0px 6px; font-style: italic;">No quick tasks right now</div></div><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin: 18px 0px 8px; padding-left: 2px;">Work</div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-amber" style="cursor:default">Carr</span><span style="font-size:11px;color:var(--text-faint)">3 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+        </tr></tbody></table></div><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin: 4px 0px 8px; padding-left: 2px; display: flex; align-items: center; gap: 6px;"><span>📅 Due This Week</span><span style="font-size:10px;font-weight:400;color:var(--text-faint);">15 items</span></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 10px; border-left: 3px solid var(--navy); border-radius: 0 var(--radius-lg) var(--radius-lg) 0;"><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+        <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
+        <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Platform</th>
+        <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
+        <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
+        <th style="width:33%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Notes</th>
+      </tr></thead><tbody><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Melinda Non-Compete</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-teal" style="cursor:default;font-size:10px;">C&amp;Co</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/29/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Figure out approach on non-compete</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Brandon Lamar Visit Dates</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-navy" style="cursor:default;font-size:10px;">BWFP</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/30/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-red" style="cursor:default;font-size:10px;">Delegated</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Waiting on him to send me dates</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Claude Deal Cloud Tool Build</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-navy" style="cursor:default;font-size:10px;">Deal Gen</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/30/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Build deal gen artifact</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Vulcan Bioworks Call</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-navy" style="cursor:default;font-size:10px;">Deal Gen</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/30/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Set up call with Vulcan</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">AI Cohort Launch</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-navy" style="cursor:default;font-size:10px;">BWFP</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/30/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Get a cohort approach up and running</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">DT Engineering Visit</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-red" style="cursor:default;font-size:10px;">M&amp;A</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/30/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-red" style="cursor:default;font-size:10px;">Delegated</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Finalize a date</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Check in with Corey</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">4/30/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-teal" style="cursor:default;font-size:10px;">Quick Task</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Give Corey a call</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Mid-Year Shareholder CAll</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-amber" style="cursor:default;font-size:10px;">Carr</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Set up shareholder call</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Mid-Year Shareholder Call</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Mid-year shareholder update</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Mid-Year Shareholder Call</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-teal" style="cursor:default;font-size:10px;">C&amp;Co</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Mid-year shareholder call</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">BWFP Monthly Matrix</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-navy" style="cursor:default;font-size:10px;">BWFP</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-gray" style="cursor:default;font-size:10px;">Not started</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Come up with an approach for monthly team staffing</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Alfa LOI Response</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-red" style="cursor:default;font-size:10px;">M&amp;A</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-red" style="cursor:default;font-size:10px;">Delegated</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Awaiting feedback to updated LOI</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Creative Group Intro Call</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-navy" style="cursor:default;font-size:10px;">Deal Gen</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Set up teams discussion with Janet and John</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Dialect Date</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-navy" style="cursor:default;font-size:10px;">Deal Gen</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Get a date to introduce Pat</td>
+        </tr><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Packaging Assembly Support</td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;font-family:'DM Mono',monospace;color:var(--text-muted);">5/1/26</td>
+                    <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">In-Progress</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Support for Alpine</td>
+        </tr></tbody></table></div><div style="border-top: 2px solid var(--border); margin: 18px 0px 14px; position: relative;"><span style="position:absolute;top:-9px;left:0;background:var(--bg);padding-right:10px;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);">By Platform</span></div><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin: 4px 0px 8px; padding-left: 2px; display: flex; align-items: center; gap: 6px;"><span>⚡ Quick Tasks</span><span style="font-size:10px;font-weight:400;color:var(--text-faint);">1 item — knock these out in free minutes</span></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 16px; border-left: 3px solid var(--teal); border-radius: 0 var(--radius-lg) var(--radius-lg) 0;"><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+        <th style="width:30%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
+        <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Platform</th>
+        <th style="width:9%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
+        <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
+        <th style="width:30%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Notes</th>
+        <th style="width:8%;border-bottom:1px solid var(--border);"></th>
+      </tr></thead><tbody><tr>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <div class="ecell" contenteditable="true" data-placeholder="Action item">Check in with Corey</div></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <div class="ecell" contenteditable="true" data-placeholder="Date">4/30/26</div></td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <select class="qt-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task" selected="">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+          </td>
+          <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <div class="ecell" contenteditable="true" data-placeholder="Notes">Give Corey a call</div></td>
+          <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+            <button class="del-btn" onclick="delRailRow(27)">✕</button></td>
+        </tr></tbody></table></div><div style="font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin: 18px 0px 8px; padding-left: 2px;">Work</div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-amber" style="cursor:default">Carr</span><span style="font-size:11px;color:var(--text-faint)">1 item</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
           <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
           <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
           <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
           <th style="width:35%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Notes / update</th>
           <th style="width:8%;border-bottom:1px solid var(--border);"></th>
         </tr></thead><tbody><tr>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">Joel Mid-Year Prep</div>
-              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
-                <span class="badge badge-amber row-plt-cycle" title="Click to change platform" style="font-size:9px;">Carr</span>
-                
-              </div>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Date">4/20/26</div></td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started" selected="">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Prep for Joel's mid-year review</div></td>
-            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(24)">✕</button></td>
-          </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Mid-Year Shareholder CAll</div>
               <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
@@ -691,48 +970,14 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Set up shareholder call</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(15)">✕</button></td>
-          </tr><tr>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">CARR Offsite Overview</div>
-              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
-                <span class="badge badge-amber row-plt-cycle" title="Click to change platform" style="font-size:9px;">Carr</span>
-                
-              </div>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Date">5/6/26</div></td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started" selected="">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Complete offsite overview slide</div></td>
-            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(23)">✕</button></td>
-          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-blue" style="cursor:default">MSI</span><span style="font-size:11px;color:var(--text-faint)">6 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+              <button class="del-btn" onclick="delRailRow(11)">✕</button></td>
+          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-blue" style="cursor:default">MSI</span><span style="font-size:11px;color:var(--text-faint)">5 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
           <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
           <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
           <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
           <th style="width:35%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Notes / update</th>
           <th style="width:8%;border-bottom:1px solid var(--border);"></th>
         </tr></thead><tbody><tr>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">Alpine Meeting Prep</div>
-              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
-                <span class="badge badge-blue row-plt-cycle" title="Click to change platform" style="font-size:9px;">MSI</span>
-                
-              </div>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Date">4/24/26</div></td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Develop agenda and content</div></td>
-            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(4)">✕</button></td>
-          </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Schedule Intec Visit</div>
               <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
@@ -748,7 +993,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Set up visit to Intec</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(21)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(16)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Mid-Year Shareholder Call</div>
@@ -765,7 +1010,24 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Mid-year shareholder update</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(16)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(12)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">Packaging Assembly Support</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-blue row-plt-cycle" title="Click to change platform" style="font-size:9px;">MSI</span>
+                
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/1/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Support for Alpine</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(32)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Megadale 2H Budget</div>
@@ -782,24 +1044,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Develop budget assumptions for the rest of the year</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(12)">✕</button></td>
-          </tr><tr>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">MSI Offsite Overview</div>
-              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
-                <span class="badge badge-blue row-plt-cycle" title="Click to change platform" style="font-size:9px;">MSI</span>
-                
-              </div>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Date">5/6/26</div></td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Complete Offsite Overview</div></td>
-            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(22)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(8)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Schedule Galway Visit</div>
@@ -816,8 +1061,8 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Find dates for a visit to Galway</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(13)">✕</button></td>
-          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-teal" style="cursor:default">C&amp;Co</span><span style="font-size:11px;color:var(--text-faint)">4 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+              <button class="del-btn" onclick="delRailRow(9)">✕</button></td>
+          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-teal" style="cursor:default">C&amp;Co</span><span style="font-size:11px;color:var(--text-faint)">6 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
           <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
           <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
           <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
@@ -839,7 +1084,24 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Finalize legal agreements</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(14)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(10)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">Melinda Non-Compete</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-teal row-plt-cycle" title="Click to change platform" style="font-size:9px;">C&amp;Co</span>
+                
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">4/29/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Figure out approach on non-compete</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(28)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Mid-Year Shareholder Call</div>
@@ -856,7 +1118,24 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Mid-year shareholder call</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(17)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(13)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">Mike Goal Alignment</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-teal row-plt-cycle" title="Click to change platform" style="font-size:9px;">C&amp;Co</span>
+                
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/31/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started" selected="">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Clarify South Africa targets and goals</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(25)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Sarah Hannah Redemption</div>
@@ -873,7 +1152,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Redeem Sara Hannah Equity</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(7)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(5)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Matt Whiat Redemption</div>
@@ -890,7 +1169,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Redeem Matt Whiat equity</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(8)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(6)">✕</button></td>
           </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-navy" style="cursor:default">BWFP</span><span style="font-size:11px;color:var(--text-faint)">9 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
           <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
           <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
@@ -898,23 +1177,6 @@
           <th style="width:35%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Notes / update</th>
           <th style="width:8%;border-bottom:1px solid var(--border);"></th>
         </tr></thead><tbody><tr>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">BWFP Monthly Pulse Materials</div>
-              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
-                <span class="badge badge-navy row-plt-cycle" title="Click to change platform" style="font-size:9px;">BWFP</span>
-                
-              </div>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Date">4/24/26</div></td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started" selected="">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Develop monthly update materials</div></td>
-            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(5)">✕</button></td>
-          </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">BWFP Staffing Matrix</div>
               <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
@@ -930,7 +1192,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Coverage Matrix</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(26)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(18)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Brandon Lamar Visit Dates</div>
@@ -964,7 +1226,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Get a cohort approach up and running</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(28)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(20)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">BWFP Monthly Matrix</div>
@@ -981,7 +1243,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Come up with an approach for monthly team staffing</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(27)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(19)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">BWFP Offsite Materials</div>
@@ -998,7 +1260,24 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Developed agenda, need to work on intro deck</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(6)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(4)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">EVA Updates</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-navy row-plt-cycle" title="Click to change platform" style="font-size:9px;">BWFP</span>
+                
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/5/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Update EVA share price file</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(31)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">BOD Outline</div>
@@ -1050,30 +1329,13 @@
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Need to define staffing evolution</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <button class="del-btn" onclick="delRailRow(0)">✕</button></td>
-          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-navy" style="cursor:default">BW</span><span style="font-size:11px;color:var(--text-faint)">0 items</span></div><div style="font-size: 12px; color: var(--text-faint); padding: 4px 0px 6px; font-style: italic;">No active items</div></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-navy" style="cursor:default">Deal Gen</span><span style="font-size:11px;color:var(--text-faint)">4 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-navy" style="cursor:default">BW</span><span style="font-size:11px;color:var(--text-faint)">0 items</span></div><div style="font-size: 12px; color: var(--text-faint); padding: 4px 0px 6px; font-style: italic;">No active items</div></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-navy" style="cursor:default">Deal Gen</span><span style="font-size:11px;color:var(--text-faint)">6 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
           <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
           <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
           <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
           <th style="width:35%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Notes / update</th>
           <th style="width:8%;border-bottom:1px solid var(--border);"></th>
         </tr></thead><tbody><tr>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">Harland/Kamp Materials</div>
-              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
-                <span class="badge badge-navy row-plt-cycle" title="Click to change platform" style="font-size:9px;">Deal Gen</span>
-                
-              </div>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Date">4/28/26</div></td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started" selected="">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Develop presentation materials</div></td>
-            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(10)">✕</button></td>
-          </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Claude Deal Cloud Tool Build</div>
               <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
@@ -1089,7 +1351,7 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Build deal gen artifact</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(9)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(7)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Vulcan Bioworks Call</div>
@@ -1106,7 +1368,58 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Set up call with Vulcan</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(25)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(17)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">Creative Group Intro Call</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-navy row-plt-cycle" title="Click to change platform" style="font-size:9px;">Deal Gen</span>
+                
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/1/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Set up teams discussion with Janet and John</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(23)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">Dialect Date</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-navy row-plt-cycle" title="Click to change platform" style="font-size:9px;">Deal Gen</span>
+                
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/1/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Get a date to introduce Pat</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(24)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">N+1 Visit Date</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-navy row-plt-cycle" title="Click to change platform" style="font-size:9px;">Deal Gen</span>
+                
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/15/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started" selected="">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Find a date for a N+1 visit, last item I sent him an NDA</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(26)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Don Matz Connect</div>
@@ -1123,8 +1436,8 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Connect with Don on move to Lincoln</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(19)">✕</button></td>
-          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-red" style="cursor:default">M&amp;A</span><span style="font-size:11px;color:var(--text-faint)">4 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
+              <button class="del-btn" onclick="delRailRow(15)">✕</button></td>
+          </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-red" style="cursor:default">M&amp;A</span><span style="font-size:11px;color:var(--text-faint)">5 items</span></div><table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;"><thead><tr>
           <th style="width:34%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Action item</th>
           <th style="width:10%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Due</th>
           <th style="width:13%;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--border);">Status</th>
@@ -1132,27 +1445,10 @@
           <th style="width:8%;border-bottom:1px solid var(--border);"></th>
         </tr></thead><tbody><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">M&amp;A - N+1 Connection</div>
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">DT Engineering Visit</div>
               <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
                 <span class="badge badge-red row-plt-cycle" title="Click to change platform" style="font-size:9px;">M&amp;A</span>
-                
-              </div>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Date">4/24/26</div></td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress" selected="">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
-            </td>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Call confirmed for next week</div></td>
-            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(20)">✕</button></td>
-          </tr><tr>
-            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Action item">Flow Technology Bid Response</div>
-              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
-                <span class="badge badge-red row-plt-cycle" title="Click to change platform" style="font-size:9px;">M&amp;A</span>
-                <span style="font-size:9px;color:var(--text-faint);">→</span><div class="ecell delegated-to" contenteditable="true" data-placeholder="Delegated to…" style="font-size:11px;color:var(--red-text);min-width:80px;">Cornerstone</div>
+                <span style="font-size:9px;color:var(--text-faint);">→</span><div class="ecell delegated-to" contenteditable="true" data-placeholder="Delegated to…" style="font-size:11px;color:var(--red-text);min-width:80px;">Jim Sheldon</div>
               </div>
             </td>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
@@ -1161,9 +1457,9 @@
               <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated" selected="">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
             </td>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <div class="ecell" contenteditable="true" data-placeholder="Notes">Awaiting banker feedback</div></td>
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Finalize a date</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(11)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(22)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">Alfa LOI Response</div>
@@ -1180,7 +1476,24 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Awaiting feedback to updated LOI</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(29)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(21)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">Flow GLG Calls</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-red row-plt-cycle" title="Click to change platform" style="font-size:9px;">M&amp;A</span>
+                <span style="font-size:9px;color:var(--text-faint);">→</span><div class="ecell delegated-to" contenteditable="true" data-placeholder="Delegated to…" style="font-size:11px;color:var(--red-text);min-width:80px;">Arthur</div>
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/8/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated" selected="">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Get calls setup and completed pre-MP</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(30)">✕</button></td>
           </tr><tr>
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Action item">M&amp;A - Akadeum Check In</div>
@@ -1197,7 +1510,24 @@
             <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
               <div class="ecell" contenteditable="true" data-placeholder="Notes">Check in with Brandon to see how DD is going</div></td>
             <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
-              <button class="del-btn" onclick="delRailRow(18)">✕</button></td>
+              <button class="del-btn" onclick="delRailRow(14)">✕</button></td>
+          </tr><tr>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Action item">Project Meridian Review</div>
+              <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                <span class="badge badge-red row-plt-cycle" title="Click to change platform" style="font-size:9px;">M&amp;A</span>
+                <span style="font-size:9px;color:var(--text-faint);">→</span><div class="ecell delegated-to" contenteditable="true" data-placeholder="Delegated to…" style="font-size:11px;color:var(--red-text);min-width:80px;">Nykin</div>
+              </div>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Date">5/15/26</div></td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <select class="rail-status-sel" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 6px;background:var(--bg);color:var(--text);cursor:pointer;width:100%;outline:none;"><option value="Not started">Not started</option><option value="In-Progress">In-Progress</option><option value="Quick Task">Quick Task</option><option value="On-Hold">On-Hold</option><option value="Delegated" selected="">Delegated</option><option value="Parking Lot">Parking Lot</option><option value="Complete">Complete</option></select>
+            </td>
+            <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <div class="ecell" contenteditable="true" data-placeholder="Notes">Get the book and review - small Indian packaging biz</div></td>
+            <td style="padding:9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+              <button class="del-btn" onclick="delRailRow(29)">✕</button></td>
           </tr></tbody></table></div><div class="card" style="padding: 12px 16px 8px; margin-bottom: 8px;"><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span class="badge badge-gray" style="cursor:default">Other</span><span style="font-size:11px;color:var(--text-faint)">0 items</span></div><div style="font-size: 12px; color: var(--text-faint); padding: 4px 0px 6px; font-style: italic;">No active items</div></div></div>
   </div>
 
@@ -1216,6 +1546,106 @@
             <th style="width:8%"></th>
           </tr></thead>
           <tbody id="completed-body"><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Brad Butler Meeting</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-navy" style="cursor:default;font-size:10px;">BWFP</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-28</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Confirm meeting time/date</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(26)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Harland/KAMP Research</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-navy" style="cursor:default;font-size:10px;">Deal Gen</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-28</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Prep for visits</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(25)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">MSI Offsite Overview</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Complete Offsite Overview</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(24)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">CARR Offsite Overview</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-amber" style="cursor:default;font-size:10px;">Carr</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Complete offsite overview slide</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(23)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Harland/Kamp Materials</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-navy" style="cursor:default;font-size:10px;">Deal Gen</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Develop presentation materials</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(22)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">M&amp;A - N+1 Connection</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-red" style="cursor:default;font-size:10px;">M&amp;A</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Call confirmed for next week</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(21)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Flow Technology Bid Response</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-red" style="cursor:default;font-size:10px;">M&amp;A</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Awaiting banker feedback</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(20)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Alpine Meeting Prep</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">MSI</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Develop agenda and content</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(19)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">BWFP Monthly Pulse Materials</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-navy" style="cursor:default;font-size:10px;">BWFP</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Develop monthly update materials</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(18)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Joel Mid-Year Prep</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
+        <span class="badge badge-amber" style="cursor:default;font-size:10px;">Carr</span></td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">2026-04-27</td>
+      <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;color:var(--text-muted);">Prep for Joel's mid-year review</td>
+      <td style="padding:9px 0;border-bottom:1px solid var(--border);">
+        <button class="del-btn" onclick="delCompletedRow(17)" style="opacity:1;color:var(--text-faint);" title="Remove">✕</button></td>
+    </tr><tr>
       <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;">Alfa LOI Question Response</td>
       <td style="padding:9px 10px 9px 0;border-bottom:1px solid var(--border);vertical-align:top;">
         <span class="badge badge-blue" style="cursor:default;font-size:10px;">Action</span></td>
@@ -1541,7 +1971,7 @@
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
       <button class="cal-nav-btn" onclick="calPrev()">← Prev</button>
-      <div id="cal-week-label" style="font-size:13px;font-weight:500;color:var(--navy);min-width:220px;text-align:center;">FY26 · Apr 20 – May 29, 2026</div>
+      <div id="cal-week-label" style="font-size:13px;font-weight:500;color:var(--navy);min-width:220px;text-align:center;">FY26 · Apr 27 – Jun 5, 2026</div>
       <button class="cal-nav-btn" onclick="calNext()">Next →</button>
       <button class="cal-nav-btn" onclick="calToday()" style="margin-left:6px;font-size:11px;">Today</button>
     </div>
@@ -1564,7 +1994,7 @@
     </div>
 
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-      <div id="cal-grid"><table style="border-collapse: collapse; min-width: 700px; width: 100%; table-layout: fixed;"><thead><tr><th style="width: 60px; border-bottom: 2px solid var(--border);"></th><th class="cal-day-header">Mon</th><th class="cal-day-header">Tue</th><th class="cal-day-header">Wed</th><th class="cal-day-header">Thu</th><th class="cal-day-header">Fri</th></tr></thead><tbody><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">Apr</div><div style="font-size:13px;font-weight:500;color:var(--navy);">20</div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-STL" title="C+CO Offsite" style="flex: 1 1 0%; min-width: 0px;">C+CO Offsite</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell today-col"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">Apr</div><div style="font-size:13px;font-weight:500;color:var(--navy);">27</div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="MN" style="flex: 1 1 0%; min-width: 0px;">MN</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="MN" style="flex: 1 1 0%; min-width: 0px;">MN</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">4</div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="Farm Offsite" style="flex: 1 1 0%; min-width: 0px;">Farm Offsite</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="Farm Offsite" style="flex: 1 1 0%; min-width: 0px;">Farm Offsite</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">11</div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="NYC - HL Conference" style="flex: 1 1 0%; min-width: 0px;">NYC - HL Conference</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">18</div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-STL" title="Adimitis / OWCC" style="flex: 1 1 0%; min-width: 0px;">Adimitis / OWCC</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">25</div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Holiday" title="Memorial Day" style="flex: 1 1 0%; min-width: 0px;">Memorial Day</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Personal" title="Cruise" style="flex: 1 1 0%; min-width: 0px;">Cruise</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr></tbody></table></div>
+      <div id="cal-grid"><table style="border-collapse: collapse; min-width: 700px; width: 100%; table-layout: fixed;"><thead><tr><th style="width: 60px; border-bottom: 2px solid var(--border);"></th><th class="cal-day-header">Mon</th><th class="cal-day-header">Tue</th><th class="cal-day-header">Wed</th><th class="cal-day-header">Thu</th><th class="cal-day-header">Fri</th></tr></thead><tbody><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">Apr</div><div style="font-size:13px;font-weight:500;color:var(--navy);">27</div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="MN" style="flex: 1 1 0%; min-width: 0px;">MN</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="MN" style="flex: 1 1 0%; min-width: 0px;">MN</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell today-col"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">4</div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="Farm Offsite" style="flex: 1 1 0%; min-width: 0px;">Farm Offsite</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="Farm Offsite" style="flex: 1 1 0%; min-width: 0px;">Farm Offsite</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">11</div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Travel" title="NYC - HL Conference" style="flex: 1 1 0%; min-width: 0px;">NYC - HL Conference</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">18</div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-STL" title="Adimitis / OWCC" style="flex: 1 1 0%; min-width: 0px;">Adimitis / OWCC</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">May</div><div style="font-size:13px;font-weight:500;color:var(--navy);">25</div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Holiday" title="Memorial Day" style="flex: 1 1 0%; min-width: 0px;">Memorial Day</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Personal" title="Cruise" style="flex: 1 1 0%; min-width: 0px;">Cruise</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr><tr><td class="cal-week-label-cell"><div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">Jun</div><div style="font-size:13px;font-weight:500;color:var(--navy);">1</div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Personal" title="Cruise" style="flex: 1 1 0%; min-width: 0px;">Cruise</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Personal" title="Cruise" style="flex: 1 1 0%; min-width: 0px;">Cruise</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Personal" title="Cruise" style="flex: 1 1 0%; min-width: 0px;">Cruise</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Personal" title="Cruise" style="flex: 1 1 0%; min-width: 0px;">Cruise</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td><td class="cal-day-cell"><div style="display: flex; align-items: center; gap: 2px; margin: 1px 0px;"><div class="cal-event-chip chip-Personal" title="Cruise" style="flex: 1 1 0%; min-width: 0px;">Cruise</div><button title="Remove event" style="font-size: 10px; line-height: 1; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: var(--text-faint); cursor: pointer; padding: 0px 2px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s;">×</button></div><div class="cal-day-note" contenteditable="true" data-placeholder="+"></div></td></tr></tbody></table></div>
     </div>
 
     <!-- Trips on Radar -->
@@ -1799,6 +2229,68 @@
       <div class="modal-actions">
         <button class="modal-btn-cancel" onclick="closeNotesModal()">Cancel</button>
         <button class="modal-btn-add" onclick="submitNotesModal()">Save note</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PLATFORM NOTES ───────────────────────────────── -->
+  <div id="platform-notes" class="section">
+    <div class="pn-shell">
+
+      <!-- Sidebar -->
+      <div class="pn-sidebar" id="pn-sidebar"></div>
+
+      <!-- Main area -->
+      <div class="pn-main">
+        <div class="pn-header">
+          <div class="pn-platform-label" id="pn-platform-label">Select a platform</div>
+          <input class="pn-search" id="pn-search" type="text" placeholder="Search notes…" oninput="pnSearch(this.value)" />
+        </div>
+        <div class="pn-feed" id="pn-feed">
+          <div class="pn-empty">Select a platform from the left to view notes</div>
+        </div>
+        <div class="pn-add-bar" id="pn-add-bar" style="display:none;">
+          <button onclick="pnAddEntry()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;background:var(--navy);color:#fff;border:none;border-radius:var(--radius);padding:7px 18px;cursor:pointer;">+ New note</button>
+          <label style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text-muted);margin-left:12px;cursor:pointer;">
+            <input type="file" id="pn-file-input" accept=".pdf,.doc,.docx,.txt,.png,.jpg" style="display:none;" onchange="pnAttachFile(this)" />
+            📎 Attach file
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Platform Notes Entry Modal ───────────────────── -->
+  <div class="modal-backdrop" id="pn-modal" onclick="closePnModal(event)">
+    <div class="modal" style="max-width:560px;">
+      <div class="modal-title">New note</div>
+      <div class="modal-row">
+        <div class="modal-field" style="flex:2;">
+          <label class="modal-label">Title</label>
+          <input class="modal-input" id="pn-m-title" type="text" placeholder="e.g. Q3 MBR, Site visit takeaways…" />
+        </div>
+        <div class="modal-field" style="flex:1;">
+          <label class="modal-label">Date</label>
+          <input class="modal-input" id="pn-m-date" type="text" />
+        </div>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">Notes</label>
+        <textarea class="modal-input" id="pn-m-body" rows="8" placeholder="Meeting notes, key takeaways, decisions, open items…" style="resize:vertical;line-height:1.6;font-family:'DM Sans',sans-serif;"></textarea>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">Attachments <span style="font-size:10px;font-weight:400;color:var(--text-faint);">(PDF, Word, image, text)</span></label>
+        <label style="display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text-muted);cursor:pointer;border:1px dashed var(--border-strong);border-radius:var(--radius);padding:8px 14px;transition:all .15s;width:100%;"
+               onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)';this.style.background='var(--teal-light)'"
+               onmouseout="this.style.borderColor='var(--border-strong)';this.style.color='var(--text-muted)';this.style.background='transparent'">
+          <input type="file" id="pn-m-file" accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg" multiple style="display:none;" onchange="pnModalFileChange(this)" />
+          📎 Click to attach files
+        </label>
+        <div id="pn-m-file-list" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn-cancel" onclick="closePnModal()">Cancel</button>
+        <button class="modal-btn-add" onclick="submitPnEntry()">Save note</button>
       </div>
     </div>
   </div>
@@ -3146,15 +3638,15 @@ function delMAArchive(i) {
 // ── Seed user data from snapshot (injected) ───────────────────────
 function seedUserData() {
   const hasRail = state.railRows && state.railRows.length > 0;
-  const injected = {"railRows":[{"item":"Innovation Week Registrations","category":"Work","due":"","status":"Not started","notes":"Register for meetings","delegatedTo":"","platform":"BWFP"},{"item":"DHC Touch Base","category":"Work","due":"4/17/26","status":"Not started","notes":"Check in with DHC","delegatedTo":"","platform":"BWFP"},{"item":"M&A - N+1 Connection","platform":"Carr","category":"Work","due":"4/17/26","status":"Not started","notes":"Set up conversation with N+1","delegatedTo":""},{"item":"Joel Mid-Year Prep","platform":"Carr","category":"Work","due":"4/17/26","status":"Not started","notes":"Prep for Joel's mid-year review","delegatedTo":""},{"item":"Schedule Intec Trip","platform":"Carr","category":"Work","due":"4/20/26","status":"Not started","notes":"Schedule a visit to Intec to see full auto","delegatedTo":""},{"item":"Mid-Year Shareholder CAll","platform":"Carr","category":"Work","due":"5/1/26","status":"Not started","notes":"Set up shareholder call","delegatedTo":""},{"item":"CARR Offsite Overview","platform":"Carr","category":"Work","due":"5/6/26","status":"Not started","notes":"Complete offsite overview slide","delegatedTo":""},{"item":"M&A - Akadeum Check In","platform":"Carr","category":"Work","due":"5/15/26","status":"Not started","notes":"Check in with Brandon to see how DD is going","delegatedTo":""},{"item":"Tom Doyle Conversation","platform":"MSI","category":"Work","due":"4/16/26","status":"Not started","notes":"Conversation on Thursday","delegatedTo":"Brian Strini"},{"item":"M&A - Pass on THOR","platform":"MSI","category":"Work","due":"4/17/26","status":"Not started","notes":"Call set up on 4/15","delegatedTo":""},{"item":"M&A - Fastwinders Repoonse","platform":"MSI","category":"Work","due":"4/17/26","status":"Not started","notes":"Call set up on 4/20","delegatedTo":""},{"item":"6+6 Forecast Scrub","platform":"MSI","category":"Work","due":"4/20/26","status":"Not started","notes":"Scrub forecast for pulse update","delegatedTo":""},{"item":"Launch Revenue Review Tool","platform":"MSI","category":"Work","due":"4/22/26","status":"Not started","notes":"Complete training and launch","delegatedTo":""},{"item":"Review Monthly Step Change Slides","platform":"MSI","category":"Work","due":"4/22/26","status":"Not started","notes":"Review submitted content and align with Strini","delegatedTo":""},{"item":"Schedule Intec Visit","platform":"MSI","category":"Work","due":"4/24/26","status":"Not started","notes":"Set up visit to Intec","delegatedTo":""},{"item":"Matthias Equity Investment","platform":"MSI","category":"Work","due":"4/24/26","status":"Not started","notes":"Note sent to Tim","delegatedTo":""},{"item":"Alpine Meeting Prep","platform":"MSI","category":"Work","due":"4/27/26","status":"Not started","notes":"Develop agenda and content","delegatedTo":""},{"item":"Mid-Year Shareholder Call","platform":"MSI","category":"Work","due":"5/1/26","status":"Not started","notes":"Mid-year shareholder update","delegatedTo":""},{"item":"Megadale 2H Budget","platform":"MSI","category":"Work","due":"5/5/26","status":"Not started","notes":"Develop budget assumptions for the rest of the year","delegatedTo":""},{"item":"MSI Offsite Overview","platform":"MSI","category":"Work","due":"5/6/26","status":"Not started","notes":"Complete Offsite Overview","delegatedTo":""},{"item":"Schedule Galway Visit","platform":"MSI","category":"Work","due":"5/15/26","status":"Not started","notes":"Find dates for a visit to Galway","delegatedTo":""},{"item":"Pat 1 on 1 Framework","platform":"C&Co","category":"Work","due":"4/14/26","status":"Not started","notes":"File up and running","delegatedTo":""},{"item":"Pat External Announcement","platform":"C&Co","category":"Work","due":"4/15/26","status":"Not started","notes":"Get announcement out","delegatedTo":""},{"item":"Finalize Agreements with Pat","platform":"C&Co","category":"Work","due":"4/17/26","status":"Not started","notes":"Finalize legal agreements","delegatedTo":""},{"item":"Pat Equity Investment","platform":"C&Co","category":"Work","due":"4/17/26","status":"Not started","notes":"Note sent to Tim","delegatedTo":""},{"item":"Mid-Year Shareholder Call","platform":"C&Co","category":"Work","due":"5/1/26","status":"Not started","notes":"Mid-year shareholder call","delegatedTo":""},{"item":"Sarah Hannah Redemption","platform":"C&Co","category":"Work","due":"6/30/26","status":"Not started","notes":"Redeem Sara Hannah Equity","delegatedTo":""},{"item":"Matt Whiat Redemption","platform":"C&Co","category":"Work","due":"6/30/26","status":"Not started","notes":"Redeem Matt Whiat equity","delegatedTo":""},{"item":"BWFP Monthly Pulse Materials","platform":"BWFP","category":"Work","due":"4/24/26","status":"Not started","notes":"Develop monthly update materials","delegatedTo":""},{"item":"Brandon Lamar Visit Dates","platform":"BWFP","category":"Work","due":"4/30/26","status":"Not started","notes":"Waiting on him to send me dates","delegatedTo":"Brandon Lamar"},{"item":"Flow Technology Bid Response","platform":"BWFP","category":"Work","due":"4/30/26","status":"Not started","notes":"Awaiting banker feedback","delegatedTo":"Cornerstone"},{"item":"BWFP Offsite Materials","platform":"BWFP","category":"Work","due":"5/5/26","status":"Not started","notes":"Developed agenda, need to work on intro deck","delegatedTo":""},{"item":"BOD Outline","platform":"BWFP","category":"Work","due":"5/15/26","status":"Not started","notes":"Rough draft of outline","delegatedTo":""},{"item":"Disarm with Data","platform":"BWFP","category":"Work","due":"6/1/26","status":"Not started","notes":"Complete training content","delegatedTo":""},{"item":"Mid-Year Reviews - Forsyth","platform":"BWFP","category":"Work","due":"6/30/2026","status":"Not started","notes":"Need to define staffing evolution","delegatedTo":""},{"item":"Catch up with EC M&A","platform":"Deal Gen","category":"Work","due":"4/24/26","status":"Not started","notes":"Ashley working on dates","delegatedTo":"Ashley Johnson"},{"item":"Harland/Kamp Materials","platform":"Deal Gen","category":"Work","due":"4/28/26","status":"Not started","notes":"Develop presentation materials","delegatedTo":""},{"item":"Claude Deal Cloud Tool Build","platform":"Deal Gen","category":"Work","due":"4/30/26","status":"Not started","notes":"Build deal gen artifact","delegatedTo":""},{"item":"Don Matz Connect","platform":"Deal Gen","category":"Work","due":"5/31/26","status":"Not started","notes":"Connect with Don on move to Lincoln","delegatedTo":""}],"maRows":[{"target":"Flow Technology","platform":"MSI","stage":"NDA / Evaluation","description":"Biopharma Skid Integrator","notes":"Awaiting feedback to IOI"},{"target":"THOR Automation","platform":"MSI","stage":"NDA / Evaluation","description":"Medtech equipment business in MN","notes":"Set up call to pass on oppty"},{"target":"AKADEUM","platform":"CARR","stage":"Tracking","description":"Cell Selection platform","notes":"Check in to see how DD is going"},{"target":"Alfa Wasserman","platform":"CARR","stage":"Submitted LOI","description":"Ultra-centrifuge manufacturer","notes":"Awaiting LOI Feedback"},{"target":"DT Engineering","platform":"MSI","stage":"Pre-Pipeline","description":"Life Sciences automation group","notes":"Awaiting NDA Feedback"},{"target":"Dark Horse Consulting","platform":"CARR","stage":"Pre-Pipeline","description":"Advanced Therapies consulting gorup","notes":"Note sent to Anthony as meeting follow up on 4/15/26"}],"completedRows":[{"item":"Review Monthly Step Change Slides","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"Innovation Week Registrations","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"Catch up with Shelby","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"Tom Doyle Conversation","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"Matthias Equity Investment","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"Launch Revenue Review Tool","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"Review MRP Call","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"Pat External Announcement","platform":"C&Co","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"","recordType":"action"},{"item":"M&A - Fastwinders Repoonse","platform":"M&A","category":"Work","delegatedTo":"","completedDate":"2026-04-20","notes":"","recordType":"action"},{"item":"Pat Equity Investment","platform":"C&Co","category":"Work","delegatedTo":"","completedDate":"2026-04-20","notes":"","recordType":"action"},{"item":"Sync up with Monarchi","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-20","notes":"","recordType":"action"},{"item":"M&A - Pass on THOR","platform":"M&A","category":"Work","delegatedTo":"","completedDate":"2026-04-16","notes":"","recordType":"action"},{"item":"Catch up with EC M&A","platform":"Deal Gen","category":"Work","delegatedTo":"","completedDate":"2026-04-15","notes":"","recordType":"action"},{"item":"Pat 1 on 1 Framework","platform":"C&Co","category":"Work","delegatedTo":"","completedDate":"2026-04-15","notes":"","recordType":"action"},{"item":"DHC Touch Base","platform":"Deal Gen","category":"Work","delegatedTo":"","completedDate":"2026-04-15","notes":"","recordType":"action"}],"maArchive":[],"feedbackRows":[],"trips":["Intec Visit to tie out with Corey","Galway visit"],"ocRows":[{"category":"","platform":"MSI","status":"Planning","owner":"","targets":"","completion":"","notes":""}]};
+  const injected = {"railRows":[{"item":"Check in with Corey","platform":"BWFP","category":"Work","due":"4/30/26","status":"Not started","notes":"Give Corey a call","delegatedTo":""},{"item":"Mid-Year Shareholder CAll","platform":"Carr","category":"Work","due":"5/1/26","status":"Not started","notes":"Set up shareholder call","delegatedTo":""},{"item":"Schedule Intec Visit","platform":"MSI","category":"Work","due":"4/24/26","status":"Not started","notes":"Set up visit to Intec","delegatedTo":""},{"item":"Mid-Year Shareholder Call","platform":"MSI","category":"Work","due":"5/1/26","status":"Not started","notes":"Mid-year shareholder update","delegatedTo":""},{"item":"Packaging Assembly Support","platform":"MSI","category":"Work","due":"5/1/26","status":"In-Progress","notes":"Support for Alpine","delegatedTo":""},{"item":"Megadale 2H Budget","platform":"MSI","category":"Work","due":"5/5/26","status":"Not started","notes":"Develop budget assumptions for the rest of the year","delegatedTo":""},{"item":"Schedule Galway Visit","platform":"MSI","category":"Work","due":"5/15/26","status":"Not started","notes":"Find dates for a visit to Galway","delegatedTo":""},{"item":"Finalize Agreements with Pat","platform":"C&Co","category":"Work","due":"4/17/26","status":"In-Progress","notes":"Finalize legal agreements","delegatedTo":""},{"item":"Melinda Non-Compete","platform":"C&Co","category":"Work","due":"4/29/26","status":"In-Progress","notes":"Figure out approach on non-compete","delegatedTo":""},{"item":"Mid-Year Shareholder Call","platform":"C&Co","category":"Work","due":"5/1/26","status":"Not started","notes":"Mid-year shareholder call","delegatedTo":""},{"item":"Mike Goal Alignment","platform":"C&Co","category":"Work","due":"5/31/26","status":"Not started","notes":"Clarify South Africa targets and goals","delegatedTo":""},{"item":"Sarah Hannah Redemption","platform":"C&Co","category":"Work","due":"6/30/26","status":"Not started","notes":"Redeem Sara Hannah Equity","delegatedTo":""},{"item":"Matt Whiat Redemption","platform":"C&Co","category":"Work","due":"6/30/26","status":"Not started","notes":"Redeem Matt Whiat equity","delegatedTo":""},{"item":"BWFP Staffing Matrix","platform":"BWFP","category":"Work","due":"4/24/26","status":"Not started","notes":"Coverage Matrix","delegatedTo":""},{"item":"Brandon Lamar Visit Dates","platform":"BWFP","category":"Work","due":"4/30/26","status":"Delegated","notes":"Waiting on him to send me dates","delegatedTo":"Brandon Lamar"},{"item":"AI Cohort Launch","platform":"BWFP","category":"Work","due":"4/30/26","status":"In-Progress","notes":"Get a cohort approach up and running","delegatedTo":""},{"item":"BWFP Monthly Matrix","platform":"BWFP","category":"Work","due":"5/1/26","status":"Not started","notes":"Come up with an approach for monthly team staffing","delegatedTo":""},{"item":"BWFP Offsite Materials","platform":"BWFP","category":"Work","due":"5/5/26","status":"In-Progress","notes":"Developed agenda, need to work on intro deck","delegatedTo":""},{"item":"EVA Updates","platform":"BWFP","category":"Work","due":"5/5/26","status":"In-Progress","notes":"Update EVA share price file","delegatedTo":""},{"item":"BOD Outline","platform":"BWFP","category":"Work","due":"5/15/26","status":"Not started","notes":"Rough draft of outline","delegatedTo":""},{"item":"Disarm with Data","platform":"BWFP","category":"Work","due":"6/1/26","status":"Not started","notes":"Complete training content","delegatedTo":""},{"item":"Mid-Year Reviews - Forsyth","platform":"BWFP","category":"Work","due":"6/30/2026","status":"In-Progress","notes":"Need to define staffing evolution","delegatedTo":""},{"item":"Claude Deal Cloud Tool Build","platform":"Deal Gen","category":"Work","due":"4/30/26","status":"Not started","notes":"Build deal gen artifact","delegatedTo":""},{"item":"Vulcan Bioworks Call","platform":"Deal Gen","category":"Work","due":"4/30/26","status":"In-Progress","notes":"Set up call with Vulcan","delegatedTo":""},{"item":"Creative Group Intro Call","platform":"Deal Gen","category":"Work","due":"5/1/26","status":"In-Progress","notes":"Set up teams discussion with Janet and John","delegatedTo":""},{"item":"Dialect Date","platform":"Deal Gen","category":"Work","due":"5/1/26","status":"In-Progress","notes":"Get a date to introduce Pat","delegatedTo":""},{"item":"N+1 Visit Date","platform":"Deal Gen","category":"Work","due":"5/15/26","status":"Not started","notes":"Find a date for a N+1 visit, last item I sent him an NDA","delegatedTo":""},{"item":"Don Matz Connect","platform":"Deal Gen","category":"Work","due":"5/31/26","status":"Not started","notes":"Connect with Don on move to Lincoln","delegatedTo":""},{"item":"DT Engineering Visit","platform":"M&A","category":"Work","due":"4/30/26","status":"Delegated","notes":"Finalize a date","delegatedTo":"Jim Sheldon"},{"item":"Alfa LOI Response","platform":"M&A","category":"Work","due":"5/1/26","status":"Delegated","notes":"Awaiting feedback to updated LOI","delegatedTo":"Stefano Jr."},{"item":"Flow GLG Calls","platform":"M&A","category":"Work","due":"5/8/26","status":"Delegated","notes":"Get calls setup and completed pre-MP","delegatedTo":"Arthur"},{"item":"M&A - Akadeum Check In","platform":"M&A","category":"Work","due":"5/15/26","status":"In-Progress","notes":"Check in with Brandon to see how DD is going","delegatedTo":""},{"item":"Project Meridian Review","platform":"M&A","category":"Work","due":"5/15/26","status":"Delegated","notes":"Get the book and review - small Indian packaging biz","delegatedTo":"Nykin"}],"completedRows":[{"item":"Brad Butler Meeting","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-28","notes":"Confirm meeting time/date","recordType":"action"},{"item":"Harland/KAMP Research","platform":"Deal Gen","category":"Work","delegatedTo":"","completedDate":"2026-04-28","notes":"Prep for visits","recordType":"action"},{"item":"MSI Offsite Overview","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Complete Offsite Overview","recordType":"action"},{"item":"CARR Offsite Overview","platform":"Carr","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Complete offsite overview slide","recordType":"action"},{"item":"Harland/Kamp Materials","platform":"Deal Gen","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Develop presentation materials","recordType":"action"},{"item":"M&A - N+1 Connection","platform":"M&A","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Call confirmed for next week","recordType":"action"},{"item":"Flow Technology Bid Response","platform":"M&A","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Awaiting banker feedback","recordType":"action"},{"item":"Alpine Meeting Prep","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Develop agenda and content","recordType":"action"},{"item":"BWFP Monthly Pulse Materials","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Develop monthly update materials","recordType":"action"},{"item":"Joel Mid-Year Prep","platform":"Carr","category":"Work","delegatedTo":"","completedDate":"2026-04-27","notes":"Prep for Joel's mid-year review","recordType":"action"},{"item":"Alfa LOI Question Response","platform":"M&A","category":"Work","delegatedTo":"","completedDate":"2026-04-23","notes":"Respond to questions","recordType":"action"},{"item":"6+6 Forecast Scrub","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-23","notes":"Scrub forecast for pulse update","recordType":"action"},{"item":"Review Monthly Step Change Slides","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Review submitted content and align with Strini","recordType":"action"},{"item":"Innovation Week Registrations","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Register for meetings","recordType":"action"},{"item":"Catch up with Shelby","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Talk through BW Comms / Forsyth history","recordType":"action"},{"item":"Tom Doyle Conversation","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Conversation on Thursday","recordType":"action"},{"item":"Matthias Equity Investment","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Note sent to Tim","recordType":"action"},{"item":"Launch Revenue Review Tool","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Complete training and launch","recordType":"action"},{"item":"Review MRP Call","platform":"MSI","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Review meeting recording","recordType":"action"},{"item":"Pat External Announcement","platform":"C&Co","category":"Work","delegatedTo":"","completedDate":"2026-04-21","notes":"Get announcement out","recordType":"action"},{"item":"M&A - Fastwinders Repoonse","platform":"M&A","category":"Work","delegatedTo":"","completedDate":"2026-04-20","notes":"Call set up on 4/20","recordType":"action"},{"item":"Pat Equity Investment","platform":"C&Co","category":"Work","delegatedTo":"","completedDate":"2026-04-20","notes":"Note sent to Tim","recordType":"action"},{"item":"Sync up with Monarchi","platform":"BWFP","category":"Work","delegatedTo":"","completedDate":"2026-04-20","notes":"Sync up on Garrett","recordType":"action"},{"item":"M&A - Pass on THOR","platform":"M&A","category":"Work","delegatedTo":"","completedDate":"2026-04-16","notes":"Call set up on 4/15","recordType":"action"},{"item":"Catch up with EC M&A","platform":"Deal Gen","category":"Work","delegatedTo":"","completedDate":"2026-04-15","notes":"Ashley working on dates","recordType":"action"},{"item":"Pat 1 on 1 Framework","platform":"C&Co","category":"Work","delegatedTo":"","completedDate":"2026-04-15","notes":"File up and running","recordType":"action"},{"item":"DHC Touch Base","platform":"Deal Gen","category":"Work","delegatedTo":"","completedDate":"2026-04-15","notes":"Check in with DHC","recordType":"action"}],"maRows":[{"target":"Flow Technology","platform":"MSI","stage":"NDA / Evaluation","description":"Biopharma Skid Integrator","notes":"Awaiting feedback to IOI"},{"target":"AKADEUM","platform":"CARR","stage":"Tracking","description":"Cell Selection platform","notes":"Check in to see how DD is going"},{"target":"Alfa Wasserman","platform":"CARR","stage":"Submitted LOI","description":"Ultra-centrifuge manufacturer","notes":"Need to craft feedback"},{"target":"DT Engineering","platform":"MSI","stage":"NDA / Evaluation","description":"Life Sciences automation group","notes":"Need to schedule visit"},{"target":"Dark Horse Consulting","platform":"CARR","stage":"Pre-Pipeline","description":"Advanced Therapies consulting gorup","notes":"Note sent to Anthony as meeting follow up on 4/15/26"},{"target":"N+1","platform":"MSI","stage":"Tracking","description":"","notes":""}],"notesRows":[{"title":"CARR IT Transition","date":"Apr 21, 2026","platform":"Carr","person":"Frank Lunato","status":"Parking Lot","details":"Long-term CARR IT support","type":"note"},{"title":"Jennifer / Comms Discussion","date":"Apr 20, 2026","platform":"BWFP","person":"Partners","status":"Not started","details":"Fill in on context for Jen's note","type":"note"},{"title":"Expert Services Structure","date":"Apr 20, 2026","platform":"BWFP","person":"Cichon","status":"Not started","details":"Have we worked through more of the structural elements","type":"note"},{"title":"BWFP Staffing Approach","date":"Apr 15, 2026","platform":"BWFP","person":"Partners","status":"In-Progress","details":"Do we need to come up with a better approach to medium-term staffing understanding, I think we are putting too much down to our teams","type":"note"}],"trips":["Intec Visit to tie out with Corey","Galway visit"],"maArchive":[{"target":"THOR Automation","platform":"MSI","stage":"NDA / Evaluation","description":"Medtech equipment business in MN","notes":"Set up call to pass on oppty","archivedDate":"2026-04-20"}],"feedbackRows":[],"ocRows":[]};
   if (!hasRail) {
-    state.railRows = injected.railRows || [];
-    state.maRows = injected.maRows || [];
-    state.feedbackRows = injected.feedbackRows || [];
-    state.trips = injected.trips || [];
-    state.ocRows = injected.ocRows || [];
+    state.railRows    = injected.railRows    || [];
+    state.maRows      = injected.maRows      || [];
+    state.feedbackRows= injected.feedbackRows|| [];
+    state.trips       = injected.trips       || [];
+    state.ocRows      = injected.ocRows      || [];
+    state.notesRows   = injected.notesRows   || [];
   }
-  // Always restore completedRows if empty
   if (!state.completedRows || state.completedRows.length === 0) {
     state.completedRows = injected.completedRows || [];
   }
@@ -3163,6 +3655,7 @@ function seedUserData() {
   }
   saveState();
 }
+
 
 // ── Notes ─────────────────────────────────────────────────────────
 const notesFilterOpts = ['All','Not started','In-Progress','Quick Task','On-Hold','Delegated','Parking Lot','Complete'];
@@ -3346,9 +3839,248 @@ function delNote(i) {
   scheduleSave();
 }
 
+
+// ── Platform Notes ────────────────────────────────────────────────
+const PN_PLATFORMS = ['Carr','MSI','C&Co','BWFP','BW','Deal Gen','M&A','Other'];
+const PN_PLATFORM_COLORS = {
+  'Carr':'badge-amber','MSI':'badge-blue','C&Co':'badge-teal',
+  'BWFP':'badge-navy','BW':'badge-navy','Deal Gen':'badge-navy',
+  'M&A':'badge-red','Other':'badge-gray'
+};
+
+let pnActivePlatform = null;
+let pnSearchQuery = '';
+
+function pnKey(platform) {
+  return 'pnotes_' + platform.replace(/[^a-zA-Z0-9]/g,'_');
+}
+
+function pnGetNotes(platform) {
+  if (!state.platformNotes) state.platformNotes = {};
+  return state.platformNotes[platform] || [];
+}
+
+function pnSaveNotes(platform, notes) {
+  if (!state.platformNotes) state.platformNotes = {};
+  state.platformNotes[platform] = notes;
+  scheduleSave();
+}
+
+function renderPnSidebar() {
+  const sidebar = document.getElementById('pn-sidebar');
+  if (!sidebar) return;
+  sidebar.innerHTML = '';
+  PN_PLATFORMS.forEach(plt => {
+    const notes = pnGetNotes(plt);
+    const item = document.createElement('div');
+    item.className = 'pn-sidebar-item' + (plt === pnActivePlatform ? ' active' : '');
+    item.innerHTML = `<span>${plt}</span><span class="pn-sidebar-count">${notes.length}</span>`;
+    item.onclick = () => { pnActivePlatform = plt; pnSearchQuery = ''; document.getElementById('pn-search').value = ''; renderPlatformNotes(); };
+    sidebar.appendChild(item);
+  });
+}
+
+function renderPnFeed() {
+  const feed = document.getElementById('pn-feed');
+  const addBar = document.getElementById('pn-add-bar');
+  const label = document.getElementById('pn-platform-label');
+  if (!feed) return;
+
+  if (!pnActivePlatform) {
+    feed.innerHTML = '<div class="pn-empty">Select a platform from the left to view notes</div>';
+    if (addBar) addBar.style.display = 'none';
+    return;
+  }
+
+  label.textContent = pnActivePlatform;
+  if (addBar) addBar.style.display = 'block';
+
+  let notes = pnGetNotes(pnActivePlatform).slice().reverse(); // newest first
+  const idx_offset = pnGetNotes(pnActivePlatform).length;
+
+  // Apply search filter
+  if (pnSearchQuery) {
+    const q = pnSearchQuery.toLowerCase();
+    notes = notes.filter(n =>
+      (n.title || '').toLowerCase().includes(q) ||
+      (n.body  || '').toLowerCase().includes(q)
+    );
+  }
+
+  if (notes.length === 0) {
+    feed.innerHTML = pnSearchQuery
+      ? '<div class="pn-empty">No notes match your search</div>'
+      : '<div class="pn-empty">No notes yet for ' + pnActivePlatform + ' — click "+ New note" to start</div>';
+    return;
+  }
+
+  feed.innerHTML = '';
+  notes.forEach((note) => {
+    // Find real index in original (non-reversed) array
+    const allNotes = pnGetNotes(pnActivePlatform);
+    const realIdx = allNotes.indexOf(note);
+
+    const entry = document.createElement('div');
+    entry.className = 'pn-entry';
+
+    // Attachments display
+    let attachHtml = '';
+    if (note.attachments && note.attachments.length > 0) {
+      attachHtml = note.attachments.map(a =>
+        `<span class="pn-pdf-chip">📄 ${a.name}</span>`
+      ).join(' ');
+    }
+
+    entry.innerHTML = `
+      <div class="pn-entry-header">
+        <div class="pn-entry-title" contenteditable="true">${note.title || ''}</div>
+        <div class="pn-entry-date">${note.date || ''}</div>
+      </div>
+      <div class="pn-entry-body" contenteditable="true">${note.body || ''}</div>
+      ${attachHtml ? '<div style="margin-top:8px;">' + attachHtml + '</div>' : ''}
+      <div class="pn-entry-footer">
+        <span class="badge ${PN_PLATFORM_COLORS[pnActivePlatform]||'badge-gray'}" style="cursor:default;font-size:10px;">${pnActivePlatform}</span>
+        <button class="pn-del-btn" onclick="pnDeleteEntry(${realIdx})">✕ Remove</button>
+      </div>
+    `;
+
+    // Inline editing
+    const titleEl = entry.querySelector('.pn-entry-title');
+    titleEl.addEventListener('input', () => {
+      pnGetNotes(pnActivePlatform)[realIdx].title = titleEl.textContent;
+      scheduleSave();
+      renderPnSidebar();
+    });
+    titleEl.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();titleEl.blur();} });
+
+    const bodyEl = entry.querySelector('.pn-entry-body');
+    bodyEl.addEventListener('input', () => {
+      pnGetNotes(pnActivePlatform)[realIdx].body = bodyEl.textContent;
+      scheduleSave();
+    });
+
+    feed.appendChild(entry);
+  });
+}
+
+function renderPlatformNotes() {
+  renderPnSidebar();
+  renderPnFeed();
+}
+
+function pnSearch(q) {
+  pnSearchQuery = q;
+  renderPnFeed();
+}
+
+let _pnPendingFiles = []; // holds {name, type, data} for modal attachments
+
+function pnModalFileChange(input) {
+  if (!input.files || !input.files.length) return;
+  const listEl = document.getElementById('pn-m-file-list');
+  Array.from(input.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      _pnPendingFiles.push({ name: file.name, type: file.type, data: e.target.result });
+      // Show chip
+      const chip = document.createElement('span');
+      chip.className = 'pn-pdf-chip';
+      chip.style.cssText = 'display:inline-flex;align-items:center;gap:4px;cursor:pointer;';
+      chip.innerHTML = '📄 ' + file.name + ' <span style="opacity:0.6;font-size:10px;">✕</span>';
+      chip.onclick = () => {
+        _pnPendingFiles = _pnPendingFiles.filter(f => f.name !== file.name);
+        chip.remove();
+      };
+      if (listEl) listEl.appendChild(chip);
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = ''; // allow re-selecting same file
+}
+
+function pnAddEntry() {
+  if (!pnActivePlatform) return;
+  _pnPendingFiles = [];
+  const today = new Date();
+  const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dateStr = mo[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
+  document.getElementById('pn-m-title').value = '';
+  document.getElementById('pn-m-body').value = '';
+  document.getElementById('pn-m-date').value = dateStr;
+  const listEl = document.getElementById('pn-m-file-list');
+  if (listEl) listEl.innerHTML = '';
+  document.getElementById('pn-modal').classList.add('open');
+  setTimeout(() => document.getElementById('pn-m-title').focus(), 50);
+}
+
+function closePnModal(e) {
+  if (e && e.target !== document.getElementById('pn-modal')) return;
+  document.getElementById('pn-modal').classList.remove('open');
+}
+
+function submitPnEntry() {
+  const title = document.getElementById('pn-m-title').value.trim();
+  const body  = document.getElementById('pn-m-body').value.trim();
+  if (!title && !body) { document.getElementById('pn-m-title').focus(); return; }
+  const notes = pnGetNotes(pnActivePlatform);
+  notes.push({
+    title,
+    date: document.getElementById('pn-m-date').value.trim(),
+    body,
+    attachments: _pnPendingFiles.slice(), // include any attached files
+    created: Date.now()
+  });
+  _pnPendingFiles = [];
+  pnSaveNotes(pnActivePlatform, notes);
+  document.getElementById('pn-modal').classList.remove('open');
+  renderPlatformNotes();
+}
+
+function pnDeleteEntry(idx) {
+  if (!pnActivePlatform) return;
+  if (!confirm('Remove this note?')) return;
+  const notes = pnGetNotes(pnActivePlatform);
+  notes.splice(idx, 1);
+  pnSaveNotes(pnActivePlatform, notes);
+  renderPlatformNotes();
+}
+
+function pnAttachFile(input) {
+  if (!pnActivePlatform || !input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    // Store file as base64 for PDF/image, or plain text for .txt
+    const notes = pnGetNotes(pnActivePlatform);
+    // Attach to the most recent note, or create a new note entry for it
+    if (notes.length === 0) {
+      // Create a new note with this attachment
+      const today = new Date();
+      const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      notes.push({
+        title: file.name,
+        date: mo[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear(),
+        body: '',
+        attachments: [{ name: file.name, type: file.type, data: e.target.result }],
+        created: Date.now()
+      });
+    } else {
+      // Attach to most recent note
+      const lastNote = notes[notes.length - 1];
+      if (!lastNote.attachments) lastNote.attachments = [];
+      lastNote.attachments.push({ name: file.name, type: file.type, data: e.target.result });
+    }
+    pnSaveNotes(pnActivePlatform, notes);
+    renderPlatformNotes();
+    input.value = ''; // reset file input
+  };
+  reader.readAsDataURL(file);
+}
+
 function renderAll() {
   seedUserData();
   seedHistoricalEvents();
+  renderPlatformNotes();
   renderTrips();
   renderFeedback();
   renderNotes();
