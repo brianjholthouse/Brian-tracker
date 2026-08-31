@@ -412,6 +412,12 @@
     max-width: 180px;
   }
   .cal-day-cell.today-col { background: #f0fbf9; }
+  /* Days belonging to a neighbouring fiscal year: shown to keep the Mon-Fri
+     grid intact, but greyed out and inert so no day appears in two FYs. */
+  .cal-day-cell.cal-day-out {
+    background: repeating-linear-gradient(45deg, var(--bg), var(--bg) 6px, var(--surface) 6px, var(--surface) 12px);
+    opacity: .45;
+  }
   .cal-event-chip {
     display: inline-block;
     font-size: 10px;
@@ -592,6 +598,7 @@
   <div id="completed" class="section">
     <div class="card" style="padding:18px 20px 12px">
       <div class="card-title">Completed items</div>
+      <div id="completed-filter-bar" class="filter-bar" style="margin-bottom:12px;"></div>
       <div class="table-wrap">
         <table>
           <thead><tr>
@@ -661,6 +668,7 @@
         <button class="fy-btn" data-fy="FY24" onclick="setFY('FY24',this)">FY24</button>
         <button class="fy-btn" data-fy="FY25" onclick="setFY('FY25',this)">FY25</button>
         <button class="fy-btn active" data-fy="FY26" onclick="setFY('FY26',this)">FY26</button>
+        <button class="fy-btn" data-fy="FY27" onclick="setFY('FY27',this)">FY27</button>
       </div>
       <div id="fy-summary" style="display:flex;gap:10px;flex-wrap:wrap;"><div class="fy-stat-pill"><div class="fy-stat-dot" style="background:#1d4ed8"></div><span><b>61</b> Travel</span></div><div class="fy-stat-pill"><div class="fy-stat-dot" style="background:#0d6e63"></div><span><b>19</b> STL</span></div><div class="fy-stat-pill"><div class="fy-stat-dot" style="background:#92600a"></div><span><b>30</b> Personal</span></div><div class="fy-stat-pill"><div class="fy-stat-dot" style="background:#991b1b"></div><span><b>7</b> Holiday</span></div></div>
     </div>
@@ -682,7 +690,9 @@
     <div class="card" style="padding:12px 16px;margin-bottom:14px;">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <span style="font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;">Add event</span>
-        <input id="cal-add-date" type="text" placeholder="Date (e.g. Apr 21, 2026)" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:5px 10px;outline:none;min-width:160px;background:var(--bg);color:var(--text);">
+        <input id="cal-add-date" type="text" placeholder="Date(s) — Apr 21, 2026" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:5px 10px;outline:none;background:var(--bg);color:var(--text);min-width:150px;">
+        <span style="font-size:11px;color:var(--text-faint);white-space:nowrap;">through</span>
+        <input id="cal-add-date-end" type="text" placeholder="End date (optional)" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:5px 10px;outline:none;background:var(--bg);color:var(--text);min-width:135px;">
         <select id="cal-add-cat" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:5px 10px;outline:none;background:var(--bg);color:var(--text);cursor:pointer;">
           <option value="Travel">Travel</option>
           <option value="STL">STL</option>
@@ -691,9 +701,15 @@
           <option value="Event">Event</option>
         </select>
         <input id="cal-add-desc" type="text" placeholder="Description" style="font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:var(--radius);padding:5px 10px;outline:none;flex:1;min-width:160px;background:var(--bg);color:var(--text);">
+        <label style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;">
+          <input id="cal-add-weekdays" type="checkbox" checked style="cursor:pointer;margin:0;">Weekdays only
+        </label>
         <button onclick="calAddEvent()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;background:var(--navy);color:#fff;border:none;border-radius:var(--radius);padding:5px 14px;cursor:pointer;white-space:nowrap;">+ Add</button>
       </div>
       <div id="cal-add-error" style="font-size: 11px; color: rgb(239, 68, 68); margin-top: 6px; display: none;">Please enter a date and description.</div>
+      <div style="font-size:10.5px;color:var(--text-faint);margin-top:6px;line-height:1.5;">
+        Multiple dates: fill in <b>through</b> for a run of days (Aug 24 &rarr; Aug 28), or list separate dates in the first box using semicolons &mdash; <code style="font-family:'DM Mono',monospace;">Oct 5, 2026; Nov 2, 2026; Dec 7, 2026</code>.
+      </div>
     </div>
 
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
@@ -1550,21 +1566,67 @@ function submitRailModal() {
 function delRailRow(i) { state.railRows.splice(i,1); renderRail(); scheduleSave(); }
 
 // ── Completed ─────────────────────────────────────────────────────
+// Which fiscal year is showing under Completed items ('All' or e.g. 'FY27')
+let completedFY = 'All';
+
+// Tab list = every FY present in the data, plus the current FY and FY27 so the
+// tabs exist before anything has been completed in them.
+function completedFYOptions(rows) {
+  const set = new Set();
+  rows.forEach(r => {
+    const fy = fyOf(parseLocalDate(r.completedDate || ''));
+    if (fy) set.add(fy);
+  });
+  const nowFY = fyOf(new Date());
+  if (nowFY) set.add(nowFY);
+  set.add('FY27');
+  const list = [...set].sort((a, b) => (+a.slice(2)) - (+b.slice(2)));
+  return ['All', ...list];
+}
+
 function renderCompleted() {
   const rows = state.completedRows || [];
+
+  // ── FY filter tabs ──
+  const opts = completedFYOptions(rows);
+  if (opts.indexOf(completedFY) === -1) completedFY = 'All';
+  const fb = document.getElementById('completed-filter-bar');
+  if (fb) {
+    fb.innerHTML = '';
+    opts.forEach(opt => {
+      const count = opt === 'All'
+        ? rows.length
+        : rows.filter(r => fyOf(parseLocalDate(r.completedDate || '')) === opt).length;
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (completedFY === opt ? ' active' : '');
+      btn.innerHTML = opt + ' <span style="opacity:.55;font-weight:400;">' + count + '</span>';
+      btn.onclick = () => { completedFY = opt; renderCompleted(); };
+      fb.appendChild(btn);
+    });
+  }
+
+  // Keep each row's real index so delete still targets the right record
+  const visible = rows
+    .map((row, realIdx) => ({ row, realIdx }))
+    .filter(({ row }) => completedFY === 'All'
+      || fyOf(parseLocalDate(row.completedDate || '')) === completedFY);
+
   const tbody = document.getElementById('completed-body');
   if (!tbody) return;
   tbody.innerHTML = '';
-  if (rows.length === 0) {
+
+  if (visible.length === 0) {
+    const msg = rows.length === 0
+      ? 'No completed items yet. Mark items Complete on the RAIL or Notes tab to move them here.'
+      : 'Nothing completed in ' + completedFY + ' yet.';
     const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="6" style="color:var(--text-faint);font-size:12px;font-style:italic;padding:14px 0;">No completed items yet. Mark items Complete on the RAIL or Notes tab to move them here.</td>';
+    tr.innerHTML = '<td colspan="6" style="color:var(--text-faint);font-size:12px;font-style:italic;padding:14px 0;">' + msg + '</td>';
     tbody.appendChild(tr);
     return;
   }
-  [...rows].reverse().forEach((row, ri) => {
-    const realIdx = rows.length - 1 - ri;
+
+  [...visible].reverse().forEach(({ row, realIdx }) => {
     const plt = row.platform || '';
-    const cat = row.category || '';
     const recType = row.recordType || 'action';
     const typeCls = recType === 'note' ? 'badge-teal' : 'badge-blue';
     const typeLabel = recType === 'note' ? 'Note' : 'Action';
@@ -1717,10 +1779,29 @@ function initFreeform(id) {
 
 // FY boundaries: 10/1 – 9/30
 const FY_BOUNDS = {
-  FY24: { start: new Date(2023,9,1),  end: new Date(2024,8,30) },
-  FY25: { start: new Date(2024,9,1),  end: new Date(2025,8,30) },
-  FY26: { start: new Date(2025,9,1),  end: new Date(2026,9,2)  },
+  FY24: { start: new Date(2023,9,1),  end: new Date(2024,8,30,23,59,59) },
+  FY25: { start: new Date(2024,9,1),  end: new Date(2025,8,30,23,59,59) },
+  FY26: { start: new Date(2025,9,1),  end: new Date(2026,8,30,23,59,59) },
+  FY27: { start: new Date(2026,9,1),  end: new Date(2027,8,30,23,59,59) },
 };
+
+// Parse "YYYY-MM-DD" as a LOCAL date. new Date("2026-10-01") is treated as UTC
+// and lands on the previous day in US timezones; this avoids that off-by-one.
+function parseLocalDate(s) {
+  if (s instanceof Date) return s;
+  if (typeof s !== 'string' || !s.trim()) return new Date(NaN);
+  const m = s.trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (m) return new Date(+m[1], +m[2]-1, +m[3]);
+  return new Date(s.trim());
+}
+
+// Fiscal-year label for any date. FY runs 10/1 through 9/30, so anything on or
+// after Oct 1 belongs to the NEXT fiscal year (10/1/26 -> FY27).
+function fyOf(d) {
+  if (!(d instanceof Date) || isNaN(d.getTime())) return null;
+  const fy = d.getMonth() >= 9 ? d.getFullYear() + 1 : d.getFullYear();
+  return 'FY' + String(fy).slice(-2);
+}
 
 // Historical data migrated to userEvents (state.userEvents)
 const SEED_DATA = {};
@@ -1766,7 +1847,7 @@ function renderFYSummary() {
 
   const allEvents = state.userEvents || {};
   for (const [dk, events] of Object.entries(allEvents)) {
-    const d = new Date(dk);
+    const d = parseLocalDate(dk);
     if (d >= start && d <= end) {
       events.forEach(e => { if(cats[e.category]!==undefined) cats[e.category]++; });
     }
@@ -1784,6 +1865,15 @@ function renderFYSummary() {
 
 const WEEKS_SHOW = 6;
 const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri'];
+
+// Is this day inside the fiscal year currently being viewed? The Mon-Fri grid
+// necessarily overlaps the FY boundary (10/1 rarely lands on a Monday), so
+// boundary days get greyed out rather than rendered twice.
+function inFY(d, fy) {
+  const b = FY_BOUNDS[fy || currentFY];
+  if (!b) return true;
+  return d >= b.start && d <= b.end;
+}
 
 function renderCalendar() {
   const {start} = FY_BOUNDS[currentFY];
@@ -1804,10 +1894,14 @@ function renderCalendar() {
     weeks.push(weekDays);
   }
 
-  // Update nav label
-  const firstDay = weeks[0][0];
-  const lastDay  = weeks[WEEKS_SHOW-1][4];
+  // Drop any week sitting entirely outside the fiscal year
+  const visibleWeeks = weeks.filter(wd => wd.some(d => inFY(d)));
+
+  // Label reflects only the days that actually belong to this FY
   const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const inDays = visibleWeeks.flat().filter(d => inFY(d));
+  const firstDay = inDays[0] || weeks[0][0];
+  const lastDay  = inDays[inDays.length-1] || weeks[WEEKS_SHOW-1][4];
   const rangeLabel = firstDay.getMonth()===lastDay.getMonth()
     ? `${mo[firstDay.getMonth()]} ${firstDay.getDate()} – ${lastDay.getDate()}, ${lastDay.getFullYear()}`
     : `${mo[firstDay.getMonth()]} ${firstDay.getDate()} – ${mo[lastDay.getMonth()]} ${lastDay.getDate()}, ${lastDay.getFullYear()}`;
@@ -1836,19 +1930,32 @@ function renderCalendar() {
 
   const tbody = document.createElement('tbody');
 
-  weeks.forEach((weekDays, wi) => {
+  visibleWeeks.forEach((weekDays, wi) => {
     const tr = document.createElement('tr');
 
     // Week label cell
     const wLbl = document.createElement('td');
     wLbl.className = 'cal-week-label-cell';
-    const wkStart = weekDays[0];
+    // Label the row by its first day that actually belongs to this FY, so a
+    // boundary week reads "Oct 1" rather than "Sep 28".
+    const wkStart = weekDays.find(d => inFY(d)) || weekDays[0];
     wLbl.innerHTML = `<div style="font-size:10px;color:var(--text-faint);letter-spacing:.04em;">${mo[wkStart.getMonth()]}</div><div style="font-size:13px;font-weight:500;color:var(--navy);">${wkStart.getDate()}</div>`;
     tr.appendChild(wLbl);
 
     weekDays.forEach(day => {
       const dk = dateKey(day);
       const td = document.createElement('td');
+
+      // Outside the fiscal year on screen: render an empty, non-editable cell
+      // so the day only ever "lives" in the FY that owns it.
+      if (!inFY(day)) {
+        td.className = 'cal-day-cell cal-day-out';
+        const otherFY = fyOf(day);
+        td.title = otherFY ? `${fmtShort(day)} belongs to ${otherFY}` : '';
+        tr.appendChild(td);
+        return;
+      }
+
       td.className = 'cal-day-cell' + (isSameDay(day, today) ? ' today-col' : '');
 
       // Historical seed events (now stored in userEvents)
@@ -1926,45 +2033,112 @@ function seedHistoricalEvents() {
   state.userEvents = {"2023-10-09":[{"category":"STL","label":"BW Executive Meeting"}],"2023-10-10":[{"category":"STL","label":"BW Executive Meeting"}],"2023-10-11":[{"category":"STL","label":"BW Executive Meeting"}],"2023-10-12":[{"category":"STL","label":"BW Executive Meeting"}],"2023-10-23":[{"category":"STL","label":"Machine Solutions Step Change"}],"2023-10-24":[{"category":"STL","label":"Machine Solutions Step Change"}],"2023-10-25":[{"category":"STL","label":"Machine Solutions Step Change"}],"2023-11-02":[{"category":"STL","label":"CLT Day Trip - DM2 Visit"}],"2023-11-07":[{"category":"STL","label":"Chapman and Co Meeting"}],"2023-11-13":[{"category":"STL","label":"Compamed"}],"2023-11-14":[{"category":"STL","label":"Compamed"}],"2023-11-15":[{"category":"STL","label":"Compamed"}],"2023-11-23":[{"category":"STL","label":"Company Closed (Holiday)"}],"2023-11-24":[{"category":"STL","label":"Company Closed (Holiday)"}],"2023-11-28":[{"category":"STL","label":"Boston"}],"2023-11-29":[{"category":"STL","label":"Boston"}],"2023-11-30":[{"category":"STL","label":"Boston"}],"2023-12-01":[{"category":"STL","label":"Boston"}],"2023-12-05":[{"category":"STL","label":"Flow Sciences"}],"2023-12-06":[{"category":"STL","label":"Flow Sciences"}],"2023-12-12":[{"category":"STL","label":"CARR Biosystems"}],"2023-12-13":[{"category":"STL","label":"CARR Biosystems"}],"2023-12-14":[{"category":"STL","label":"CARR Biosystems"}],"2023-12-25":[{"category":"Holiday","label":"Company Closed"}],"2023-12-26":[{"category":"Holiday","label":"Company Closed"}],"2023-12-27":[{"category":"Personal","label":"Vacation Day"}],"2023-12-28":[{"category":"Personal","label":"Vacation Day"}],"2023-12-29":[{"category":"Holiday","label":"Company Closed"}],"2024-01-01":[{"category":"Holiday","label":"Company Closed"}],"2024-01-03":[{"category":"Travel","label":"Tampa - MBR CARR"}],"2024-01-04":[{"category":"Travel","label":"Tampa - MBR CARR"}],"2024-01-09":[{"category":"Travel","label":"Europe"}],"2024-01-10":[{"category":"Travel","label":"Europe"}],"2024-01-11":[{"category":"Travel","label":"Europe"}],"2024-01-12":[{"category":"Travel","label":"Europe"}],"2024-01-19":[{"category":"Travel","label":"Scottsdale"}],"2024-01-22":[{"category":"STL","label":"Alfa Wasserman MP"}],"2024-01-23":[{"category":"STL","label":"Alfa Wasserman MP"}],"2024-01-30":[{"category":"STL","label":"Step-Change 1"}],"2024-01-31":[{"category":"STL","label":"Step-Change 1"}],"2024-02-01":[{"category":"STL","label":"Step-Change 1: Comm/Ops"}],"2024-02-05":[{"category":"Travel","label":"Anaheim - MDM"}],"2024-02-06":[{"category":"Travel","label":"Anaheim - MDM"}],"2024-02-07":[{"category":"Travel","label":"Anaheim - MDM"}],"2024-02-09":[{"category":"STL","label":"Step-Change 1: Comm/Ops"}],"2024-02-21":[{"category":"STL","label":"BOD Mtg?"}],"2024-02-22":[{"category":"STL","label":"BOD Mtg?"}],"2024-03-13":[{"category":"Personal","label":"Spring Break"}],"2024-03-14":[{"category":"Personal","label":"Spring Break"}],"2024-03-15":[{"category":"Personal","label":"Spring Break"}],"2024-04-04":[{"category":"Personal","label":"Opening Day"}],"2024-04-09":[{"category":"Personal","label":"Streamsong / Raymond James"}],"2024-04-10":[{"category":"Personal","label":"Streamsong / Raymond James"}],"2024-04-11":[{"category":"Personal","label":"Streamsong / Raymond James"}],"2024-04-15":[{"category":"Travel","label":"Interphex / NYC Marketing"}],"2024-04-16":[{"category":"Travel","label":"Interphex / NYC Marketing"}],"2024-04-17":[{"category":"Travel","label":"Interphex / NYC Marketing"}],"2024-04-24":[{"category":"Travel","label":"Clearwater"}],"2024-04-25":[{"category":"Travel","label":"Clearwater"}],"2024-04-26":[{"category":"Travel","label":"Clearwater"}],"2024-04-29":[{"category":"STL","label":"Deal Max"}],"2024-04-30":[{"category":"STL","label":"Deal Max"}],"2024-05-01":[{"category":"STL","label":"Deal Max"}],"2024-05-07":[{"category":"STL","label":"Automate"}],"2024-05-27":[{"category":"Holiday","label":"Memorial Day"}],"2024-05-30":[{"category":"Personal","label":"State Am Qualifier"}],"2024-06-05":[{"category":"Personal","label":"Bushwood"}],"2024-06-06":[{"category":"Personal","label":"Bushwood"}],"2024-06-07":[{"category":"Personal","label":"Bushwood"}],"2024-06-17":[{"category":"STL","label":"BWFP Offsite"}],"2024-06-19":[{"category":"Travel","label":"Alfa Wasserman Meeting"}],"2024-06-20":[{"category":"Travel","label":"Alfa Wasserman Meeting"}],"2024-06-25":[{"category":"Travel","label":"MSI Step Change - Spartanburg"}],"2024-06-26":[{"category":"Travel","label":"MSI Step Change - Spartanburg"}],"2024-07-03":[{"category":"Personal","label":"Wisconsin"}],"2024-07-04":[{"category":"Holiday","label":"4th of July"}],"2024-07-05":[{"category":"Personal","label":"Wisconsin"}],"2024-07-08":[{"category":"Travel","label":"Intec Vision / MSI Leadership"}],"2024-07-09":[{"category":"Travel","label":"Intec Vision / MSI Leadership"}],"2024-07-10":[{"category":"Travel","label":"Intec Vision / MSI Leadership"}],"2024-07-11":[{"category":"Personal","label":"Am Champ Qualifier"}],"2024-07-15":[{"category":"Travel","label":"Erin Spain"}],"2024-07-16":[{"category":"Travel","label":"Erin Spain"}],"2024-07-17":[{"category":"Travel","label":"Erin Spain"}],"2024-07-18":[{"category":"Travel","label":"Erin Spain"}],"2024-07-19":[{"category":"Travel","label":"Erin Spain"}],"2024-07-22":[{"category":"Travel","label":"Alpine MP"}],"2024-07-23":[{"category":"Travel","label":"Alpine MP / MOPEC MP"}],"2024-07-24":[{"category":"Travel","label":"Tampa"}],"2024-07-25":[{"category":"Travel","label":"Tampa"}],"2024-07-29":[{"category":"Travel","label":"MicroSpec"}],"2024-07-31":[{"category":"Travel","label":"Baltimore"}],"2024-08-01":[{"category":"Travel","label":"Baltimore"}],"2024-08-02":[{"category":"Travel","label":"Baltimore"}],"2024-08-06":[{"category":"Personal","label":"Basalt"}],"2024-08-07":[{"category":"Personal","label":"Basalt"}],"2024-08-08":[{"category":"Personal","label":"Basalt"}],"2024-08-09":[{"category":"Personal","label":"Basalt"}],"2024-08-13":[{"category":"STL","label":"First Day CCS"}],"2024-08-14":[{"category":"Travel","label":"PISA NJ"}],"2024-08-19":[{"category":"Travel","label":"Pisa FLA"}],"2024-08-20":[{"category":"Travel","label":"Pisa FLA"}],"2024-08-21":[{"category":"Travel","label":"Pisa FLA"}],"2024-08-22":[{"category":"STL","label":"CARR Step Change"}],"2024-08-26":[{"category":"Personal","label":"Mid-Am Q"}],"2024-08-27":[{"category":"STL","label":"Cor Step Change"}],"2024-08-28":[{"category":"STL","label":"MSI / Afinitas Step Change"}],"2024-08-29":[{"category":"STL","label":"Chap Co Step Change"}],"2024-08-30":[{"category":"Travel","label":"Indy"}],"2024-09-02":[{"category":"Holiday","label":"Labor Day"}],"2024-09-09":[{"category":"Travel","label":"Europe"}],"2024-09-10":[{"category":"Travel","label":"Europe"}],"2024-09-11":[{"category":"Travel","label":"Europe"}],"2024-09-12":[{"category":"Travel","label":"Europe"}],"2024-09-16":[{"category":"Travel","label":"Alpine FLG Visit"}],"2024-09-17":[{"category":"Travel","label":"Alpine FLG Visit"}],"2024-09-18":[{"category":"Travel","label":"Alpine FLG Visit"}],"2024-09-24":[{"category":"STL","label":"BWFP Offsite"}],"2024-09-25":[{"category":"Personal","label":"Aspen"}],"2024-09-26":[{"category":"Personal","label":"Aspen"}],"2024-09-27":[{"category":"Personal","label":"Aspen"}],"2024-10-02":[{"category":"STL","label":"Koch M&A"}],"2024-10-07":[{"category":"Travel","label":"BW Executive Meeting"}],"2024-10-08":[{"category":"Travel","label":"BW Executive Meeting"}],"2024-10-09":[{"category":"Travel","label":"BW Executive Meeting"}],"2024-10-10":[{"category":"Travel","label":"BW Executive Meeting"}],"2024-10-14":[{"category":"Travel","label":"CHI Day Trip"}],"2024-10-17":[{"category":"Personal","label":"Maine"}],"2024-10-18":[{"category":"Personal","label":"Maine"}],"2024-10-23":[{"category":"Travel","label":"MSP Day Trip"}],"2024-10-28":[{"category":"Travel","label":"MSI Step Change Kick-Off"}],"2024-10-29":[{"category":"Travel","label":"MSI Step Change Kick-Off"}],"2024-10-30":[{"category":"Travel","label":"MSI Step Change Kick-Off"}],"2024-11-04":[{"category":"Travel","label":"Prod Design Visit"}],"2024-11-05":[{"category":"Travel","label":"Prod Design Visit"}],"2024-11-12":[{"category":"Travel","label":"Clearwater"}],"2024-11-13":[{"category":"Travel","label":"Clearwater"}],"2024-11-27":[{"category":"Personal","label":"Thanksgiving Wed"}],"2024-11-28":[{"category":"Holiday","label":"Thanksgiving"}],"2024-11-29":[{"category":"Holiday","label":"Thanksgiving"}],"2024-12-03":[{"category":"Travel","label":"Alpine Sales Mtg"}],"2024-12-04":[{"category":"Travel","label":"Alpine Sales Mtg"}],"2024-12-12":[{"category":"Travel","label":"CARR M&A Visioning"}],"2024-12-23":[{"category":"Personal","label":"Christmas/New Years"}],"2024-12-24":[{"category":"Holiday","label":"Company Closed"}],"2024-12-25":[{"category":"Holiday","label":"Company Closed"}],"2024-12-26":[{"category":"Personal","label":"Christmas/New Years"}],"2024-12-27":[{"category":"Personal","label":"Christmas/New Years"}],"2024-12-30":[{"category":"Personal","label":"Christmas/New Years"}],"2024-12-31":[{"category":"Holiday","label":"Company Closed"}],"2025-01-01":[{"category":"Personal","label":"Christmas/New Years"}],"2025-01-14":[{"category":"Travel","label":"CARR Picnic"}],"2025-01-15":[{"category":"Travel","label":"CARR Picnic"}],"2025-01-16":[{"category":"Personal","label":"Scottsdale"}],"2025-01-17":[{"category":"Personal","label":"Scottsdale"}],"2025-01-21":[{"category":"Travel","label":"AWST"}],"2025-01-22":[{"category":"Travel","label":"MSI Leadership Mtg"}],"2025-01-23":[{"category":"Travel","label":"MSI Leadership Mtg"}],"2025-02-03":[{"category":"Travel","label":"Anaheim"}],"2025-02-04":[{"category":"Travel","label":"Anaheim"}],"2025-02-05":[{"category":"Travel","label":"Anaheim"}],"2025-02-18":[{"category":"STL","label":"CCO Kaizen"}],"2025-02-20":[{"category":"STL","label":"CCO Kaizen"}],"2025-02-25":[{"category":"Travel","label":"BW BOD / CARR"}],"2025-02-26":[{"category":"Travel","label":"BW BOD / CARR"}],"2025-03-03":[{"category":"STL","label":"Step Change"}],"2025-03-04":[{"category":"STL","label":"Step Change"}],"2025-03-05":[{"category":"STL","label":"Step Change"}],"2025-03-06":[{"category":"STL","label":"Step Change"}],"2025-03-26":[{"category":"Travel","label":"CHI Day Trip"}],"2025-03-31":[{"category":"Travel","label":"Interphex / NYC Marketing"}],"2025-04-01":[{"category":"Travel","label":"Interphex / NYC Marketing"}],"2025-04-02":[{"category":"Travel","label":"Interphex / NYC Marketing"}],"2025-04-03":[{"category":"STL","label":"BWFP Offsite"}],"2025-04-04":[{"category":"STL","label":"BWFP Offsite"}],"2025-04-14":[{"category":"Travel","label":"CARR ELT Meeting"}],"2025-04-15":[{"category":"Travel","label":"CARR ELT Meeting"}],"2025-04-16":[{"category":"STL","label":"C+Co Strategy"}],"2025-04-17":[{"category":"STL","label":"Jim Jackson"}],"2025-04-18":[{"category":"Personal","label":"Good Friday"}],"2025-04-21":[{"category":"STL","label":"Future Leaders"}],"2025-04-22":[{"category":"Travel","label":"TAG3 MP"}],"2025-04-23":[{"category":"Personal","label":"Bushwood"}],"2025-04-24":[{"category":"Personal","label":"Bushwood"}],"2025-04-25":[{"category":"Personal","label":"Bushwood"}],"2025-04-28":[{"category":"Travel","label":"MSP/MSI"}],"2025-04-29":[{"category":"Travel","label":"MSP/MSI"}],"2025-04-30":[{"category":"Travel","label":"MSP/MSI"}],"2025-05-07":[{"category":"Travel","label":"ISCT"}],"2025-05-08":[{"category":"Travel","label":"ISCT"}],"2025-05-09":[{"category":"STL","label":"Hawks Flying"}],"2025-05-12":[{"category":"Travel","label":"Intec Transition"}],"2025-05-13":[{"category":"Travel","label":"Intec Transition"}],"2025-05-14":[{"category":"Travel","label":"Intec Transition"}],"2025-05-15":[{"category":"Travel","label":"Intec Transition"}],"2025-05-23":[{"category":"Personal","label":"Florida"}],"2025-05-26":[{"category":"Personal","label":"Florida"}],"2025-05-27":[{"category":"Personal","label":"Florida"}],"2025-05-28":[{"category":"Personal","label":"Florida"}],"2025-05-29":[{"category":"Personal","label":"Florida"}],"2025-05-30":[{"category":"Personal","label":"Florida"}],"2025-06-02":[{"category":"Travel","label":"MPP / Boston"}],"2025-06-03":[{"category":"Travel","label":"MPP / Boston"}],"2025-06-04":[{"category":"Travel","label":"MPP / Boston"}],"2025-06-10":[{"category":"Travel","label":"Millar Visit / CARR ELT"}],"2025-06-11":[{"category":"Travel","label":"Millar Visit / CARR ELT"}],"2025-06-12":[{"category":"Travel","label":"Millar Visit / CARR ELT"}],"2025-06-16":[{"category":"Travel","label":"Intec"}],"2025-06-17":[{"category":"Travel","label":"Intec"}],"2025-06-18":[{"category":"Travel","label":"Intec"}],"2025-06-19":[{"category":"STL","label":"M&A / Matter"}],"2025-06-25":[{"category":"STL","label":"BOD Meeting"}],"2025-07-03":[{"category":"Personal","label":"4th of July Eve"}],"2025-07-04":[{"category":"Holiday","label":"4th of July"}],"2025-07-07":[{"category":"Travel","label":"Intec"}],"2025-07-08":[{"category":"Travel","label":"Intec"}],"2025-07-09":[{"category":"Travel","label":"Intec"}],"2025-07-10":[{"category":"STL","label":"Pat Burgess"}],"2025-07-14":[{"category":"Travel","label":"ELT Mtg"}],"2025-07-15":[{"category":"Travel","label":"ELT Mtg"}],"2025-07-16":[{"category":"Travel","label":"ELT Mtg"}],"2025-07-18":[{"category":"Personal","label":"Grandma Bday"}],"2025-07-29":[{"category":"Personal","label":"Aspen"}],"2025-07-30":[{"category":"Personal","label":"Aspen"}],"2025-07-31":[{"category":"Personal","label":"Aspen"}],"2025-08-01":[{"category":"Personal","label":"Aspen"}],"2025-08-12":[{"category":"STL","label":"Chapman 10 Year"}],"2025-08-13":[{"category":"STL","label":"Chapman All Hands"}],"2025-08-18":[{"category":"Personal","label":"Mid-Am Q"}],"2025-08-19":[{"category":"Travel","label":"Alpine Strategy"}],"2025-08-20":[{"category":"STL","label":"BW Purpose Audit"}],"2025-08-26":[{"category":"STL","label":"Step Change"}],"2025-08-27":[{"category":"STL","label":"Step Change"}],"2025-08-28":[{"category":"STL","label":"Step Change"}],"2025-09-01":[{"category":"Holiday","label":"Labor Day"}],"2025-09-02":[{"category":"Travel","label":"Intec"}],"2025-09-03":[{"category":"Travel","label":"Intec"}],"2025-09-12":[{"category":"STL","label":"Women's Retreat"}],"2025-09-16":[{"category":"Travel","label":"Farm Offsite"}],"2025-09-17":[{"category":"Travel","label":"Farm Offsite"}],"2025-09-22":[{"category":"Travel","label":"Opex Benchmarking"}],"2025-09-23":[{"category":"Travel","label":"Opex Benchmarking"}],"2025-09-29":[{"category":"Personal","label":"Met 4Ball"}],"2025-09-30":[{"category":"Personal","label":"Met 4Ball"}],"2025-10-06":[{"category":"Travel","label":"Exec Meeting"}],"2025-10-07":[{"category":"Travel","label":"Exec Meeting"}],"2025-10-08":[{"category":"Travel","label":"Exec Meeting"}],"2025-10-09":[{"category":"Travel","label":"Exec Meeting"}],"2025-10-13":[{"category":"Travel","label":"Intec"}],"2025-10-14":[{"category":"Travel","label":"Intec"}],"2025-10-15":[{"category":"STL","label":"4Ball Q"}],"2025-10-21":[{"category":"Travel","label":"Flagstaff"}],"2025-10-22":[{"category":"Travel","label":"Flagstaff"}],"2025-10-24":[{"category":"Personal","label":"CCSA Golf"}],"2025-10-27":[{"category":"STL","label":"Barrett Value Visit"}],"2025-11-04":[{"category":"Travel","label":"Intec"}],"2025-11-05":[{"category":"Travel","label":"Intec"}],"2025-11-10":[{"category":"Travel","label":"CARR/Intellitech"}],"2025-11-11":[{"category":"Travel","label":"CARR/Intellitech"}],"2025-11-12":[{"category":"Travel","label":"CARR/Intellitech"}],"2025-11-19":[{"category":"STL","label":"Capital Providers"}],"2025-11-24":[{"category":"Travel","label":"Packer Game"}],"2025-11-26":[{"category":"Personal","label":"Thanksgiving Wed"}],"2025-11-27":[{"category":"Holiday","label":"Thanksgiving"}],"2025-11-28":[{"category":"Holiday","label":"Thanksgiving"}],"2025-12-08":[{"category":"Travel","label":"CARR"}],"2025-12-09":[{"category":"STL","label":"Unite"}],"2025-12-10":[{"category":"STL","label":"Unite"}],"2025-12-11":[{"category":"STL","label":"Unite"}],"2025-12-15":[{"category":"STL","label":"LST M&A"}],"2025-12-16":[{"category":"STL","label":"LST M&A"}],"2025-12-24":[{"category":"Holiday","label":"Christmas"}],"2025-12-25":[{"category":"Holiday","label":"Christmas"}],"2025-12-26":[{"category":"Personal","label":"Xmas Holiday"}],"2025-12-29":[{"category":"Personal","label":"Xmas Holiday"}],"2025-12-30":[{"category":"Personal","label":"Xmas Holiday"}],"2025-12-31":[{"category":"Holiday","label":"Christmas"}],"2026-01-01":[{"category":"Holiday","label":"New Year's Day"}],"2026-01-02":[{"category":"Personal","label":"Xmas Holiday"}],"2026-01-06":[{"category":"Travel","label":"MSI ELT"}],"2026-01-07":[{"category":"Travel","label":"MSI ELT"}],"2026-01-19":[{"category":"Personal","label":"Nat Champ"}],"2026-01-20":[{"category":"Personal","label":"Nat Champ"}],"2026-01-27":[{"category":"Travel","label":"Alfa/QBR"}],"2026-01-28":[{"category":"Travel","label":"Alfa/QBR"}],"2026-01-29":[{"category":"Travel","label":"Indy"}],"2026-02-02":[{"category":"Travel","label":"MDM"}],"2026-02-03":[{"category":"Travel","label":"MDM"}],"2026-02-04":[{"category":"Personal","label":"WM Open"}],"2026-02-05":[{"category":"Personal","label":"WM Open"}],"2026-02-06":[{"category":"Personal","label":"WM Open"}],"2026-02-11":[{"category":"Travel","label":"ATW"}],"2026-02-12":[{"category":"Travel","label":"ATW"}],"2026-02-17":[{"category":"Travel","label":"MSI Step Chg"}],"2026-02-18":[{"category":"Travel","label":"MSI Step Chg"}],"2026-02-20":[{"category":"Travel","label":"Akadeum"}],"2026-03-03":[{"category":"STL","label":"ELT / CTG Update"}],"2026-03-04":[{"category":"STL","label":"ELT / CTG Update"}],"2026-03-05":[{"category":"STL","label":"ELT / CTG Update"}],"2026-03-10":[{"category":"Travel","label":"Alfa"}],"2026-03-11":[{"category":"Travel","label":"Alfa"}],"2026-03-16":[{"category":"Travel","label":"Den Day Trip"}],"2026-03-20":[{"category":"Personal","label":"Spring Break"}],"2026-03-24":[{"category":"Travel","label":"ELT Huddle"}],"2026-03-25":[{"category":"Travel","label":"ELT Huddle"}],"2026-04-01":[{"category":"Travel","label":"FLG"}],"2026-04-02":[{"category":"Travel","label":"FLG"}],"2026-04-03":[{"category":"Personal","label":"Easter"}],"2026-04-16":[{"category":"Personal","label":"Bushwood"}],"2026-04-17":[{"category":"Personal","label":"Bushwood"}],"2026-04-20":[{"category":"STL","label":"C+CO Offsite"}],"2026-04-21":[{"category":"STL","label":"C+CO Offsite"}],"2026-04-22":[{"category":"Travel","label":"NYC Interphex"}],"2026-04-23":[{"category":"Travel","label":"NYC Interphex"}],"2026-04-27":[{"category":"Travel","label":"MN"}],"2026-04-28":[{"category":"Travel","label":"MN"}],"2026-05-05":[{"category":"Travel","label":"Farm Offsite"}],"2026-05-06":[{"category":"Travel","label":"Farm Offsite"}],"2026-05-13":[{"category":"Travel","label":"NYC - HL Conference"}],"2026-05-21":[{"category":"STL","label":"Adimitis / OWCC"}],"2026-05-29":[{"category":"Personal","label":"Cruise"}],"2026-06-01":[{"category":"Personal","label":"Cruise"}],"2026-06-02":[{"category":"Personal","label":"Cruise"}],"2026-06-03":[{"category":"Personal","label":"Cruise"}],"2026-06-04":[{"category":"Personal","label":"Cruise"}],"2026-06-05":[{"category":"Personal","label":"Cruise"}],"2026-06-09":[{"category":"Travel","label":"MSI Step Change"}],"2026-06-10":[{"category":"Travel","label":"MSI Step Change"}],"2026-06-23":[{"category":"STL","label":"BOD Mtg"}],"2026-06-24":[{"category":"STL","label":"BOD Mtg"}],"2026-06-29":[{"category":"STL","label":"M&A Training"}],"2026-07-07":[{"category":"Travel","label":"Farm Offsite"}],"2026-07-08":[{"category":"Travel","label":"Farm Offsite"}],"2026-07-21":[{"category":"STL","label":"Talent Meetings"}],"2026-07-29":[{"category":"Personal","label":"Aspen"}],"2026-07-30":[{"category":"Personal","label":"Aspen"}],"2026-07-31":[{"category":"Personal","label":"Aspen"}],"2026-08-07":[{"category":"STL","label":"Old Belle"}],"2026-08-12":[{"category":"Travel","label":"County Golf Outing"}],"2026-08-13":[{"category":"Travel","label":"County Golf Outing"}],"2026-08-18":[{"category":"STL","label":"EVA Meetings"}],"2026-08-24":[{"category":"Personal","label":"Scotland"}],"2026-08-25":[{"category":"Personal","label":"Scotland"}],"2026-08-26":[{"category":"Personal","label":"Scotland"}],"2026-08-27":[{"category":"Personal","label":"Scotland"}],"2026-08-28":[{"category":"Personal","label":"Scotland"}],"2026-09-22":[{"category":"Travel","label":"MPP Galway"}]};
   saveState();
 }
+// Parse one date entered by hand. Requires a 4-digit year, because JS reads a
+// bare "Apr 21" as the year 2001 rather than flagging it.
+function calParseOne(str) {
+  if (!/\d{4}/.test(str)) {
+    return { error: 'Include the year: "' + str + '" — e.g. "Apr 21, 2026" or "2026-04-21".' };
+  }
+  const d = parseLocalDate(str);
+  if (isNaN(d.getTime())) {
+    return { error: 'Date not recognised: "' + str + '" — try "Apr 21, 2026" or "2026-04-21".' };
+  }
+  d.setHours(0,0,0,0);
+  return { date: d };
+}
+
+// Expand the date field(s) into a concrete list of dates.
+//  - one date:            "Apr 21, 2026"  /  "2026-04-21"
+//  - several dates:       "Oct 5, 2026; Nov 2, 2026"   (semicolon separated;
+//                         commas also work when every piece parses on its own)
+//  - a run of days:       start date + end date, optionally weekdays only
+function calCollectDates(startStr, endStr, weekdaysOnly) {
+  const NUMERIC_DATE = /^(\d{4}-\d{1,2}-\d{1,2}|\d{1,2}\/\d{1,2}\/\d{2,4})$/;
+  let parts = startStr.split(';').map(p => p.trim()).filter(Boolean);
+  if (parts.length === 1 && parts[0].indexOf(',') !== -1) {
+    const cp = parts[0].split(',').map(p => p.trim()).filter(Boolean);
+    if (cp.length > 1 && cp.every(p => NUMERIC_DATE.test(p))) parts = cp;
+  }
+
+  const dates = [];
+  for (const p of parts) {
+    const d = calParseOne(p);
+    if (d.error) return d;
+    dates.push(d.date);
+  }
+  if (!dates.length) return { error: 'Please enter a date and description.' };
+
+  if (endStr) {
+    if (dates.length > 1) {
+      return { error: 'Use either a list of dates or a start + end date — not both.' };
+    }
+    const endRes = calParseOne(endStr);
+    if (endRes.error) return endRes;
+    const end = endRes.date;
+    if (end < dates[0]) return { error: 'End date falls before the start date.' };
+    const span = [];
+    for (let d = new Date(dates[0]); d <= end; d.setDate(d.getDate() + 1)) span.push(new Date(d));
+    return { dates: weekdaysOnly ? span.filter(d => d.getDay() !== 0 && d.getDay() !== 6) : span };
+  }
+
+  // De-dupe an explicit list, keep chronological order
+  const seen = new Set();
+  const uniq = [];
+  dates.sort((a,b) => a - b).forEach(d => {
+    const k = dateKey(d);
+    if (!seen.has(k)) { seen.add(k); uniq.push(d); }
+  });
+  return { dates: uniq };
+}
+
 function calAddEvent() {
   const dateStr = document.getElementById('cal-add-date').value.trim();
+  const endEl   = document.getElementById('cal-add-date-end');
+  const endStr  = endEl ? endEl.value.trim() : '';
+  const wdEl    = document.getElementById('cal-add-weekdays');
+  const weekdaysOnly = wdEl ? wdEl.checked : true;
   const cat     = document.getElementById('cal-add-cat').value;
   const desc    = document.getElementById('cal-add-desc').value.trim();
   const errEl   = document.getElementById('cal-add-error');
 
-  if (!dateStr || !desc) {
-    errEl.textContent = 'Please enter a date and description.';
-    errEl.style.display = 'block';
-    return;
-  }
+  const fail = msg => { errEl.textContent = msg; errEl.style.display = 'block'; };
 
-  // Parse the date
-  const parsed = new Date(dateStr);
-  if (isNaN(parsed.getTime())) {
-    errEl.textContent = 'Date not recognised — try e.g. "Apr 21, 2026" or "2026-04-21".';
-    errEl.style.display = 'block';
+  if (!dateStr || !desc) { fail('Please enter a date and description.'); return; }
+
+  const res = calCollectDates(dateStr, endStr, weekdaysOnly);
+  if (res.error) { fail(res.error); return; }
+  if (!res.dates.length) {
+    fail('That range contains no weekdays — untick "Weekdays only" to include the weekend.');
     return;
   }
   errEl.style.display = 'none';
 
-  const dk = `${parsed.getFullYear()}-${String(parsed.getMonth()+1).padStart(2,'0')}-${String(parsed.getDate()).padStart(2,'0')}`;
-
   if (!state.userEvents) state.userEvents = {};
-  if (!state.userEvents[dk]) state.userEvents[dk] = [];
-  state.userEvents[dk].push({ category: cat, label: desc });
+  res.dates.forEach(d => {
+    const dk = dateKey(d);
+    if (!state.userEvents[dk]) state.userEvents[dk] = [];
+    state.userEvents[dk].push({ category: cat, label: desc });
+  });
 
   // Clear inputs
   document.getElementById('cal-add-date').value = '';
+  if (endEl) endEl.value = '';
   document.getElementById('cal-add-desc').value = '';
 
-  // Jump to the week containing this date if needed
+  // Jump to the fiscal year and week containing the first new date
+  const first = res.dates[0];
+  const targetFY = fyOf(first);
+  if (targetFY && FY_BOUNDS[targetFY] && targetFY !== currentFY) {
+    currentFY = targetFY;
+    document.querySelectorAll('.fy-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.fy === currentFY);
+    });
+  }
   const {start} = FY_BOUNDS[currentFY];
   const fyMonday = mondayOf(start);
-  const targetMonday = mondayOf(parsed);
+  const targetMonday = mondayOf(first);
   const diffWeeks = Math.round((targetMonday - fyMonday) / (7*24*60*60*1000));
-  if (diffWeeks >= 0) {
-    calWeekOffset = diffWeeks;
-  }
+  if (diffWeeks >= 0) calWeekOffset = diffWeeks;
 
   renderCalendar();
   renderFYSummary();
